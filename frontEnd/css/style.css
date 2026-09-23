@@ -325,3 +325,256 @@ body {
 
     color: #667894;
 }
+
+/*   BOTÃO NOVO IMÓVEL   */
+
+.btn-novo-imovel {
+    background-color: #0b1f3a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-novo-imovel:hover {
+    opacity: 0.9;
+}
+
+
+/*    MODAL  */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.45);
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+}
+
+
+/*     CONTEÚDO DO MODAL  */
+
+.modal-conteudo {
+    background-color: white;
+
+    width: 90%;
+    max-width: 600px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+/*   CABEÇALHO   */
+
+.modal-cabecalho {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.modal-cabecalho h2 {
+    margin: 0;
+
+    color: #0b1f3a;
+
+    font-size: 22px;
+}
+
+
+/*   BOTÃO FECHAR   */
+
+.btn-fechar {
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: #555;
+
+    line-height: 1;
+}
+
+.btn-fechar:hover {
+    color: #000;
+}
+
+
+/*    CAMPOS   */
+
+.campo {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 18px;
+}
+
+.campo label {
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #333;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: #0b1f3a;
+}
+
+
+/*   CAMPOS LADO A LADO */
+
+.linha-campos {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+
+/*  AÇÕES DO MODAL  */
+
+.modal-acoes {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.btn-cancelar {
+    background-color: #eeeeee;
+
+    color: #333;
+
+    border: none;
+
+    padding: 11px 18px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.btn-cancelar:hover {
+    background-color: #dddddd;
+}
+
+.btn-cadastrar {
+    background-color: #0b1f3a;
+
+    color: white;
+
+    border: none;
+
+    padding: 11px 18px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.btn-cadastrar:hover {
+    opacity: 0.9;
+}
+
+
+/*   RESPONSIVO  */
+
+@media (max-width: 600px) {
+
+    .modal-conteudo {
+        width: 85%;
+
+        padding: 20px;
+    }
+
+    .linha-campos {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-acoes {
+        flex-direction: column;
+    }
+
+    .btn-cancelar,
+    .btn-cadastrar {
+        width: 100%;
+    }
+}
+
+.campo textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    resize: vertical;
+
+    outline: none;
+}
+
+.campo textarea:focus {
+    border-color: #0b1f3a;
+}
