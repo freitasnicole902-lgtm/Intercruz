@@ -1,0 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f6f8fb;
+    color: #17233c;
+}
+
+
+/* LAYOUT */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* MENU */
+
+.sidebar {
+    width: 270px;
+    min-height: 100vh;
+    background-color: white;
+    border-right: 1px solid #e1e6ef;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.logo {
+    height: 90px;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.logo h2 {
+    font-size: 20px;
+    color: #173f9f;
+    margin-bottom: 3px;
+}
+
+.logo span {
+    font-size: 12px;
+    color: #8290a8;
+}
+
+
+/* MENU ITEMS */
+
+.sidebar nav {
+    padding: 20px 12px;
+}
+
+.menu-item {
+    display: block;
+    padding: 14px 18px;
+    margin-bottom: 5px;
+
+    color: #4d607d;
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #eef4ff;
+    color: #1748b5;
+}
+
+.menu-item.active {
+    background-color: #eaf2ff;
+    color: #1748b5;
+    font-weight: 600;
+}
+
+
+/* CONTEÚDO */
+
+.main-content {
+    margin-left: 270px;
+    width: calc(100% - 270px);
+}
+
+
+/* TOPO */
+
+.topbar {
+    height: 75px;
+
+    background-color: white;
+    border-bottom: 1px solid #e1e6ef;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+}
+
+.topbar h1 {
+    font-size: 25px;
+}
+
+.topbar span {
+    color: #8290a8;
+    font-size: 14px;
+}
+
+
+/* CONTEÚDO */
+
+.content {
+    padding: 40px;
+}
+
+.content h2 {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #72809a;
+    margin-bottom: 30px;
+}
+
+
+/* CARDS */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.card-dashboard {
+    background-color: white;
+
+    border: 1px solid #e1e6ef;
+    border-radius: 14px;
+
+    padding: 25px;
+
+    min-height: 120px;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.card-dashboard span {
+    display: block;
+
+    font-size: 13px;
+    text-transform: uppercase;
+
+    color: #62728e;
+
+    margin-bottom: 12px;
+}
+
+.card-dashboard strong {
+    font-size: 30px;
+}
+
+/* CABEÇALHO DA PÁGINA */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.page-header h2 {
+    margin-bottom: 5px;
+}
+
+
+/* FILTROS */
+
+.filters {
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr 1fr 1fr;
+
+    gap: 15px;
+
+    background-color: white;
+
+    padding: 20px;
+
+    border: 1px solid #e1e6ef;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+}
+
+
+/* TABELA */
+
+.table-container {
+    background-color: white;
+
+    border: 1px solid #e1e6ef;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #fafbfd;
+
+    color: #62728e;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 16px;
+}
+
+.table tbody td {
+    padding: 16px;
+
+    vertical-align: middle;
+
+    color: #34445e;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #edf0f5;
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table small {
+    color: #91a0b6;
+}
+
+.codigo {
+    color: #1748b5;
+}
+
+
+/* STATUS */
+
+.status {
+    display: inline-block;
+
+    padding: 5px 12px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.status-alugado {
+    color: #087f5b;
+
+    background-color: #e6f8f1;
+}
+
+.status-disponivel {
+    color: #175cd3;
+
+    background-color: #edf4ff;
+}
+
+.status-manutencao {
+    color: #b54708;
+
+    background-color: #fff5df;
+}
+
+
+/* CONTRATO */
+
+.contrato {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 7px;
+
+    background-color: #f1f4f8;
+
+    color: #65748b;
+
+    font-size: 12px;
+}
+
+
+/* BOTÕES DE AÇÃO */
+
+.acao {
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    margin-right: 5px;
+
+    color: #667894;
+}
