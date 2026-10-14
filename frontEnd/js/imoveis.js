@@ -193,7 +193,15 @@ function mostrarImoveis() {
             document.createElement("tr");
 
 
-        // Define a classe do status
+        linha.style.cursor = "pointer";
+
+        linha.addEventListener("click", function (event) {
+             if (event.target.closest("button")) {
+            return;
+        }
+
+    window.location.href = `detalhesImovel.html?index=${index}`;
+});
 
         let classeStatus = "";
 

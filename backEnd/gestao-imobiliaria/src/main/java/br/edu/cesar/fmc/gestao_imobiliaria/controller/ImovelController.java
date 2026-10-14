@@ -43,4 +43,9 @@ public class ImovelController {
     public ResponseEntity<DashboardDTO> obterIndicadores() {
         return ResponseEntity.ok(imovelService.obterEstatisticasDashboard());
     }
+
+    @GetMapping("/imoveis/{id}")
+    public ResponseEntity<Imovel> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(imovelService.buscarPorId(id));
+    }
 }

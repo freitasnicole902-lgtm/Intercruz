@@ -39,4 +39,10 @@ public class ImovelService {
 
         return new DashboardDTO(total, alugados, disponiveis, contratosAtivos);
     }
+
+    public Imovel buscarPorId(Long id) {
+    return imovelRepository.findById(id)
+            .orElseThrow(() ->
+                    new RuntimeException("Imóvel não encontrado: " + id));
+    }
 }
