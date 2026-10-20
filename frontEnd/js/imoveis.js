@@ -14,7 +14,11 @@ const btnCancelar =
 const formulario =
     document.getElementById("form-imovel");
 
+const tipoRaw = document.getElementById("tipo") ? document.getElementById("tipo").value: "";
+const tipoEnum = tipoRaw.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
+const situacaoRaw = document.getElementById("situacao") ? document.getElementById("situacao").value: "";
+const situacaoEnum = situacaoRaw.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 // ==================================================
 // ABRIR MODAL
 // ==================================================
@@ -81,8 +85,7 @@ formulario.addEventListener(
             codigo:
                 document.getElementById("codigo").value,
 
-            tipo:
-                document.getElementById("tipo").value,
+            tipo: tipoEnum,
 
             endereco:
                 document.getElementById("endereco").value,
@@ -93,8 +96,7 @@ formulario.addEventListener(
             cidade:
                 document.getElementById("cidade").value,
 
-            situacao:
-                document.getElementById("situacao").value,
+            situacao: situacaoEnum,
 
             valor:
                 Number(
@@ -123,12 +125,7 @@ formulario.addEventListener(
     fetch("http://localhost:8080/api/imoveis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            endereco: document.getElementById("endereco") ? document.getElementById("endereco").value : "",
-            tipo: (document.getElementById("tipo") ? document.getElementById("tipo").value : "CASA").toUpperCase(),
-            valor: Number(document.getElementById("valor") ? document.getElementById("valor").value : 0),
-            situacao: "DISPONIVEL"
-        })
+        body: JSON.stringify(imovel)
     })
     .then(response => {
         if (!response.ok) throw new Error("Erro ao salvar");

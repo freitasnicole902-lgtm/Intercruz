@@ -11,7 +11,7 @@ if (formulario) {
         const cidadeInput = document.getElementById("cidade") ? document.getElementById("cidade").value : "";
         const valorInput = document.getElementById("valor") ? Number(document.getElementById("valor").value) : 0;
         const quartosInput = document.getElementById("quartos") ? Number(document.getElementById("quartos").value) : 0;
-
+        const situacaoInput = document.getElementById("situacao") ? document.getElementById("situacao").value: "";
         
         let tipoEnum = "CASA";
         const tipoLimpo = tipoInput.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -28,7 +28,18 @@ if (formulario) {
             tipoEnum = "COMERCIAL";
         }
 
-        
+        let situacaoEnum ="DISPONIVEL";
+        const situacaoLimpa = situacaoInput.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        if(situacaoLimpa.includes("ALUGADO")) {
+            situacaoEnum = "ALUGADO";
+        }
+        else if(situacaoLimpa.includes("MANUTENCAO")) {
+            situacaoEnum = "MANUTENCAO";
+        }
+        else if(situacaoLimpa.includes("DISPONIVEL")) {
+            situacaoEnum = "DISPONIVEL";
+        }
+
         const novoImovel = {
             titulo: tituloInput,
             endereco: enderecoInput,
@@ -36,7 +47,7 @@ if (formulario) {
             tipo: tipoEnum,
             valor: valorInput,
             quartos: quartosInput,
-            situacao: "DISPONIVEL"
+            situacao: situacaoEnum
         };
 
         console.log("Enviando JSON ao backend:", novoImovel);
