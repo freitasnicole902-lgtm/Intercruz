@@ -35,7 +35,7 @@ body {
 .logo {
     height: 90px;
     padding: 20px 25px;
-    border-bottom: 1px solid #e1e6ef;
+    /* border-bottom: 1px solid #e1e6ef; */
 }
 
 .logo h2 {
@@ -79,6 +79,30 @@ body {
     color: #1748b5;
     font-weight: 600;
 }
+.menu-sair {
+    display: block;
+    padding: 14px 18px;
+    margin-bottom: 5px;
+
+    color: #4d607d;
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+
+    border-top: 1px solid #e1e6ef;
+}
+.menu-sair:hover {
+    background-color: #eef4ff;
+    color: #1748b5;
+}
+
+.menu-sair.active {
+    background-color: #eaf2ff;
+    color: #1748b5;
+    font-weight: 600;
+}
 
 
 /* CONTEÚDO */
@@ -92,7 +116,7 @@ body {
 /* TOPO */
 
 .topbar {
-    height: 75px;
+    height: 90px;
 
     background-color: white;
     border-bottom: 1px solid #e1e6ef;
@@ -140,6 +164,8 @@ body {
         repeat(4, 1fr);
 
     gap: 20px;
+
+    padding-top: 30px;
 }
 
 .card-dashboard {
@@ -329,7 +355,7 @@ body {
 /*   BOTÃO NOVO IMÓVEL   */
 
 .btn-novo-imovel {
-    background-color: #0b1f3a;
+    background-color: #103A79;
     color: white;
     border: none;
     padding: 12px 20px;
@@ -399,10 +425,9 @@ body {
 
 .modal-cabecalho h2 {
     margin: 0;
-
-    color: #0b1f3a;
-
-    font-size: 22px;
+    color: #103A79;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 
@@ -417,7 +442,7 @@ body {
 
     cursor: pointer;
 
-    color: #555;
+    color: #9B9B9B;
 
     line-height: 1;
 }
@@ -776,17 +801,18 @@ body {
 ============================== */
 
 .btn-novo-contrato {
-    background: #173f9f;
-    color: #fff;
+    background-color: #103A79;
+    color: white;
     border: none;
-    border-radius: 5px;
-    padding: 10px 16px;
-    font-size: 13px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
 }
 
 .btn-novo-contrato:hover {
-    background: #12347f;
+    opacity: 0.9;
 }
 
 .contratos-filtros {
@@ -905,14 +931,15 @@ body {
 
 .modal-contrato-cabecalho h2 {
     margin: 0;
-    color: #173f9f;
+    color: #103A79;
     font-size: 20px;
+    font-weight: 600;
 }
 
 .modal-contrato-fechar {
     border: none;
     background: transparent;
-    color: #667085;
+    color: #9B9B9B;
     font-size: 28px;
     cursor: pointer;
 }
@@ -952,7 +979,7 @@ body {
 }
 
 .btn-cancelar-contrato,
-.btn-salvar-contrato {
+.btn-salvar{
     padding: 10px 16px;
     border-radius: 5px;
     font-size: 13px;
@@ -965,10 +992,12 @@ body {
     border: 1px solid #d0d5dd;
 }
 
-.btn-salvar-contrato {
-    background: #173f9f;
+.btn-salvar{
+    background: #103A79;
+;
     color: #fff;
-    border: 1px solid #173f9f;
+    border: 1px solid #103A79;
+;
 }
 
 @media (max-width: 700px) {
