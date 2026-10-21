@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterCruz - Contratos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>INTERCRUZ</h2>
+            <span>FUNDAÇÃO MANUEL CRUZ</span>
+        </div>
+
+        <nav>
+            <a href="index.html" class="menu-item">Dashboard</a>
+            <a href="imoveis.html" class="menu-item">Imóveis</a>
+            <a href="contratos.html" class="menu-item active">Contratos</a>
+            <a href="#" class="menu-item">Clientes</a>
+            <a href="#" class="menu-item">Financeiro</a>
+            <a href="#" class="menu-item">Documentos</a>
+            <a href="#" class="menu-item">Prestação de contas</a>
+            <a href="#" class="menu-item">Relatórios</a>
+            <a href="#" class="menu-item">Configurações</a>
+        </nav>
+
+        <div class="menu-sair">
+            <a href="index.html" class="menu-item">Sair</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <h1>Contratos</h1>
+            <span>InterCruz</span>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <h2>Registro de contratos</h2>
+
+                <button type="button"
+                        id="btn-novo-contrato"
+                        class="btn-novo-contrato">
+                    + Novo contrato
+                </button>
+            </div>
+
+            <div class="contratos-filtros">
+                <input type="search"
+                       id="busca-contrato"
+                       placeholder="⌕  Buscar por código / inquilino">
+
+                <select id="filtro-situacao">
+                    <option value="">Situação</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Encerrado">Encerrado</option>
+                    <option value="Pendente">Pendente</option>
+                </select>
+            </div>
+
+            <div class="table-container contratos-tabela">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Contrato</th>
+                            <th>Imóvel</th>
+                            <th>Inquilino</th>
+                            <th>Início</th>
+                            <th>Término</th>
+                            <th>Aluguel</th>
+                            <th>Situação do contrato</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-contratos">
+                        <tr>
+                            <td colspan="8">Nenhum contrato cadastrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<!-- MODAL DE CADASTRO -->
+<div id="modal-contrato" class="modal-contrato-overlay">
+    <div class="modal-contrato">
+
+        <div class="modal-contrato-cabecalho">
+            <h2>Novo contrato</h2>
+
+            <button type="button"
+                    id="btn-fechar-modal-contrato"
+                    class="modal-contrato-fechar">
+                &times;
+            </button>
+        </div>
+<form id="form-contrato">
+
+    <div class="contrato-form-grid">
+
+        <div class="campo">
+            <label for="codigo-contrato">Código</label>
+            <input
+                type="text"
+                id="codigo-contrato"
+                placeholder="Ex.: CT-023"
+                required
+            >
+        </div>
+
+        <div class="campo">
+            <label for="tipo-contrato">Tipo</label>
+            <select id="tipo-contrato" required>
+                <option value="">Selecione</option>
+                <option value="Apartamento">Apartamento</option>
+                <option value="Casa">Casa</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+
+        <div class="campo completo">
+            <label for="inquilino-contrato">Cliente</label>
+            <select id="inquilino-contrato" required>
+                <option value="">Selecione o cliente</option>
+            </select>
+        </div>
+
+        <div class="campo completo">
+            <label for="codigo-imovel">Imóvel</label>
+            <select id="codigo-imovel" required>
+                <option value="">Selecione o imóvel</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="data-inicio">Início</label>
+            <input type="date" id="data-inicio" required>
+        </div>
+
+        <div class="campo">
+            <label for="data-termino">Término</label>
+            <input type="date" id="data-termino" required>
+        </div>
+
+        <div class="campo">
+            <label for="valor-aluguel">Valor (R$)</label>
+            <input
+                type="number"
+                id="valor-aluguel"
+                min="0"
+                step="0.01"
+                placeholder="0,00"
+                required
+            >
+        </div>
+
+        <div class="campo">
+            <label for="vencimento-contrato">Vencimento (mês)</label>
+            <input
+                type="number"
+                id="vencimento-contrato"
+                min="1"
+                max="31"
+                placeholder="Ex.: 10"
+                required
+            >
+        </div>
+
+    </div>
+
+    <div class="modal-contrato-acoes">
+        <button
+            type="button"
+            id="btn-cancelar-contrato"
+            class="btn-cancelar-contrato"
+        >
+            Cancelar
+        </button>
+
+        <button type="submit" class="btn-salvar-contrato">
+            Salvar contrato
+        </button>
+    </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="js/contratos.js"></script>
+</body>
+</html>

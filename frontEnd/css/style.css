@@ -578,3 +578,516 @@ body {
 .campo textarea:focus {
     border-color: #0b1f3a;
 }
+
+
+/* ========================================
+   TELA DE DETALHES DO IMÓVEL
+======================================== */
+
+.detalhes-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    color: #4d607d;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.detalhes-voltar:hover {
+    color: #1748b5;
+}
+
+.detalhes-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.detalhes-identificacao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detalhes-identificacao h2 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.detalhes-identificacao p {
+    color: #72809a;
+    font-size: 14px;
+}
+
+.detalhes-acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-editar-imovel {
+    background-color: #0b1f3a;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-editar-imovel:hover {
+    opacity: 0.9;
+}
+
+/* Navegação entre as seções */
+
+.detalhes-abas {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    background-color: white;
+    border-bottom: 1px solid #e1e6ef;
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.detalhes-aba {
+    display: inline-block;
+    padding: 17px 4px;
+    color: #62728e;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    font-size: 14px;
+}
+
+.detalhes-aba:hover {
+    color: #1748b5;
+}
+
+.detalhes-aba.active {
+    color: #1748b5;
+    border-bottom-color: #1748b5;
+    font-weight: 600;
+}
+
+/* Cartões de informações */
+
+.detalhes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.detalhes-card {
+    background-color: white;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 25px;
+    min-width: 0;
+}
+
+.detalhes-card h3 {
+    color: #17233c;
+    font-size: 17px;
+    margin-bottom: 24px;
+}
+
+.detalhes-campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 18px;
+}
+
+.detalhes-campo {
+    min-width: 0;
+}
+
+.detalhes-campo.completo {
+    grid-column: 1 / -1;
+}
+
+.detalhes-campo span {
+    display: block;
+    color: #8290a8;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.detalhes-campo strong {
+    display: block;
+    color: #34445e;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.detalhes-carregando,
+.detalhes-erro {
+    background-color: white;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 25px;
+    color: #62728e;
+}
+
+/* Responsividade da tela de detalhes */
+
+@media (max-width: 1000px) {
+    .detalhes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding: 20px;
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .detalhes-campos {
+        grid-template-columns: 1fr;
+    }
+
+    .detalhes-campo.completo {
+        grid-column: auto;
+    }
+
+    .detalhes-abas {
+        gap: 18px;
+        padding: 0 12px;
+    }
+
+    .detalhes-card {
+        padding: 18px;
+    }
+}
+/* ==============================
+   TELA DE CONTRATOS
+============================== */
+
+.btn-novo-contrato {
+    background: #173f9f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 16px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-novo-contrato:hover {
+    background: #12347f;
+}
+
+.contratos-filtros {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 10px 28px;
+    margin-bottom: 25px;
+    background: #fff;
+    border: 1px solid #e1e6ef;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.contratos-filtros input,
+.contratos-filtros select {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    background: #fff;
+    border: 1px solid #e1e6ef;
+    border-radius: 6px;
+    color: #17233c;
+    font-size: 12px;
+}
+
+.contratos-tabela {
+    min-height: 220px;
+    background: #fff;
+}
+
+.contratos-tabela table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.contratos-tabela th {
+    color: #173f9f;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.contratos-tabela td {
+    color: #667085;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.codigo-contrato {
+    color: #173f9f;
+    font-weight: 600;
+}
+
+.status-contrato {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    border: 1px solid #a6e8bd;
+    background: #edfff2;
+    color: #16803d;
+}
+
+.status-contrato-pendente {
+    border-color: #f2d28a;
+    background: #fff8e6;
+    color: #966400;
+}
+
+.status-contrato-encerrado {
+    border-color: #d7dce5;
+    background: #f1f3f6;
+    color: #667085;
+}
+
+.btn-ver-contrato {
+    border: none;
+    background: transparent;
+    color: #98a2b3;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+/* MODAL */
+
+.modal-contrato-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-contrato {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.modal-contrato-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-contrato-cabecalho h2 {
+    margin: 0;
+    color: #173f9f;
+    font-size: 20px;
+}
+
+.modal-contrato-fechar {
+    border: none;
+    background: transparent;
+    color: #667085;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.contrato-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.contrato-form-grid .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.contrato-form-grid .campo label {
+    color: #344054;
+    font-size: 13px;
+}
+
+.contrato-form-grid .campo input,
+.contrato-form-grid .campo select {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid #d0d5dd;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.modal-contrato-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.btn-cancelar-contrato,
+.btn-salvar-contrato {
+    padding: 10px 16px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-cancelar-contrato {
+    background: #fff;
+    color: #344054;
+    border: 1px solid #d0d5dd;
+}
+
+.btn-salvar-contrato {
+    background: #173f9f;
+    color: #fff;
+    border: 1px solid #173f9f;
+}
+
+@media (max-width: 700px) {
+    .contratos-filtros {
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px;
+    }
+
+    .contratos-filtros input,
+    .contratos-filtros select {
+        width: 100%;
+        flex: auto;
+    }
+
+    .contrato-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contratos-tabela {
+        overflow-x: auto;
+    }
+}
+/* Ajustes do modal de cadastro de contratos */
+
+.modal-contrato-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(23, 35, 60, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-contrato {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
+}
+
+.modal-contrato-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-contrato-cabecalho h2 {
+    margin: 0;
+    color: #173f9f;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.contrato-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px;
+}
+
+.contrato-form-grid .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.contrato-form-grid .campo.completo {
+    grid-column: 1 / -1;
+}
+
+.contrato-form-grid .campo label {
+    color: #8290a8;
+    font-size: 12px;
+}
+
+.contrato-form-grid .campo input,
+.contrato-form-grid .campo select {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #e1e6ef;
+    border-radius: 6px;
+    background: #fff;
+    color: #17233c;
+    font-size: 13px;
+    outline: none;
+}
+
+.contrato-form-grid .campo input:focus,
+.contrato-form-grid .campo select:focus {
+    border-color: #173f9f;
+    box-shadow: 0 0 0 2px rgba(23, 63, 159, 0.08);
+}
+
+.modal-contrato-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+@media (max-width: 520px) {
+    .modal-contrato {
+        padding: 22px 18px;
+    }
+
+    .contrato-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contrato-form-grid .campo.completo {
+        grid-column: auto;
+    }
+}

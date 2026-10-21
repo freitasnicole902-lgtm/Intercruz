@@ -183,6 +183,15 @@ function mostrarImoveis() {
             imoveis.forEach(function (imovel) {
                 const linha = document.createElement("tr");
 
+                // Redirecionamento para detalhes do imóvel ao clicar na linha
+                linha.style.cursor = "pointer";
+                linha.addEventListener("click", function (event) {
+                    if (event.target.closest("button")) {
+                        return; // Ignora o clique se for nos botões de ação
+                    }
+                    window.location.href = `detalhesImovel.html?id=${imovel.id}`;
+                });
+
                 let classeStatus = "";
                 const statusNormalizado = (imovel.situacao || "").toUpperCase();
                 if (statusNormalizado === "DISPONIVEL" || statusNormalizado === "DISPONÍVEL") {

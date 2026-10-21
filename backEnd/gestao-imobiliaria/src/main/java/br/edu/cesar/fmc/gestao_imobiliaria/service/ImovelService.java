@@ -1,6 +1,8 @@
 package br.edu.cesar.fmc.gestao_imobiliaria.service;
 
 import br.edu.cesar.fmc.gestao_imobiliaria.model.Imovel;
+import br.edu.cesar.fmc.gestao_imobiliaria.model.dto.DashboardDTO;
+import br.edu.cesar.fmc.gestao_imobiliaria.model.enums.SituacaoImovel;
 import br.edu.cesar.fmc.gestao_imobiliaria.repository.ImovelRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,6 @@ public class ImovelService {
     }
 
     public Imovel salvar(Imovel imovel) {
-        // Exemplo de regra de negócio (validação de valor)
         if (imovel.getValor() != null && imovel.getValor() < 0) {
             throw new IllegalArgumentException("O valor do imóvel não pode ser negativo.");
         }
@@ -34,5 +35,14 @@ public class ImovelService {
 
     public void deletar(Long id) {
         imovelRepository.deleteById(id);
+    }
+
+    public DashboardDTO obterEstatisticasDashboard() {
+        long total = imovelRepository.count();
+        long alugados = imovelRepository.countBySituacao(SituacaoImovel.ALUGADO);
+        long disponiveis = imovelRepository.countBySituacao(SituacaoImovel.DISPONIVEL);
+        long contratosAtivos = alugados;
+
+        return new DashboardDTO(total, alugados, disponiveis, contratosAtivos);
     }
 }
