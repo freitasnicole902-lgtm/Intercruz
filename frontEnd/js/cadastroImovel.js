@@ -1,37 +1,78 @@
 const formulario = document.getElementById("form-imovel");
 
-formulario.addEventListener("submit", function (event) {
-    event.preventDefault();
+if (formulario) {
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const imovel = {
-        id: Date.now(),
+        
+        const tituloInput = document.getElementById("titulo") ? document.getElementById("titulo").value : "";
+        const tipoInput = document.getElementById("tipo") ? document.getElementById("tipo").value : "";
+        const enderecoInput = document.getElementById("endereco") ? document.getElementById("endereco").value : "Sem endereço";
+        const cidadeInput = document.getElementById("cidade") ? document.getElementById("cidade").value : "";
+        const valorInput = document.getElementById("valor") ? Number(document.getElementById("valor").value) : 0;
+        const quartosInput = document.getElementById("quartos") ? Number(document.getElementById("quartos").value) : 0;
+        const situacaoInput = document.getElementById("situacao") ? document.getElementById("situacao").value: "";
+        
+        let tipoEnum = "CASA";
+        const tipoLimpo = tipoInput.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
-        titulo: document.getElementById("titulo").value,
-        tipo: document.getElementById("tipo").value,
-        endereco: document.getElementById("endereco").value,
-        cidade: document.getElementById("cidade").value,
-        valor: Number(document.getElementById("valor").value),
-        quartos: Number(document.getElementById("quartos").value)
-    };
+        if (tipoLimpo.includes("APARTAMENTO")) {
+            tipoEnum = "APARTAMENTO";
+        } else if (tipoLimpo.includes("CASA")) {
+            tipoEnum = "CASA";
+        } else if (tipoLimpo.includes("TERRENO")) {
+            tipoEnum = "TERRENO";
+        } else if (tipoLimpo.includes("GALPAO")) {
+            tipoEnum = "GALPAO";
+        } else if (tipoLimpo.includes("COMERCIAL")) {
+            tipoEnum = "COMERCIAL";
+        }
 
-    // Recupera os imóveis já cadastrados
-    const imoveis = JSON.parse(localStorage.getItem("imoveis")) || [];
+        let situacaoEnum ="DISPONIVEL";
+        const situacaoLimpa = situacaoInput.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        if(situacaoLimpa.includes("ALUGADO")) {
+            situacaoEnum = "ALUGADO";
+        }
+        else if(situacaoLimpa.includes("MANUTENCAO")) {
+            situacaoEnum = "MANUTENCAO";
+        }
+        else if(situacaoLimpa.includes("DISPONIVEL")) {
+            situacaoEnum = "DISPONIVEL";
+        }
 
-    // Adiciona o novo imóvel
-    imoveis.push(imovel);
+        const novoImovel = {
+            titulo: tituloInput,
+            endereco: enderecoInput,
+            cidade: cidadeInput,
+            tipo: tipoEnum,
+            valor: valorInput,
+            quartos: quartosInput,
+            situacao: situacaoEnum
+        };
 
-    // Salva no navegador
-    localStorage.setItem("imoveis", JSON.stringify(imoveis));
+        console.log("Enviando JSON ao backend:", novoImovel);
 
-    alert("Imóvel trado com sucesso!");
-
-    // Verifica de onde o usuário veio
-    const parametros = new URLSearchParams(window.location.search);
-    const origem = parametros.get("origem");
-
-    if (origem === "imoveis") {
-        window.location.href = "imoveis.html";
-    } else {
-        window.location.href = "index.html";
-    }
-});
+        fetch("http://localhost:8080/api/imoveis", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(novoImovel)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erro HTTP: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Salvo no PostgreSQL:", data);
+            alert("Imóvel cadastrado com sucesso!");
+            window.location.href = "imoveis.html";
+        })
+        .catch(error => {
+            console.error("Erro na integração:", error);
+            alert("Erro ao cadastrar. Verifique se o backend Spring Boot está rodando.");
+        });
+    });
+}
