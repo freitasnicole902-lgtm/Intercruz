@@ -1,6 +1,7 @@
 package br.edu.cesar.fmc.gestao_imobiliaria.controller;
 
 import br.edu.cesar.fmc.gestao_imobiliaria.model.Imovel;
+import br.edu.cesar.fmc.gestao_imobiliaria.model.dto.DashboardDTO;
 import br.edu.cesar.fmc.gestao_imobiliaria.service.ImovelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,6 @@ public class ImovelController {
     // Criar
     @PostMapping
     public ResponseEntity<Imovel> cadastrar(@RequestBody Imovel imovel) {
-        // CORRIGIDO: Remoção da aspa escapada extra (\") para fechar a String corretamente
         System.out.println(">>> REQUISIÇÃO RECEBIDA NO BACKEND: " + imovel.getTitulo());
         
         Imovel novoImovel = imovelService.salvar(imovel);
@@ -34,6 +34,12 @@ public class ImovelController {
     public ResponseEntity<List<Imovel>> listarTodos() {
         List<Imovel> imoveis = imovelService.listarTodos();
         return ResponseEntity.ok(imoveis);
+    }
+
+    // Obter estatísticas para o Dashboard
+    @GetMapping("/dashboard")
+    public ResponseEntity<DashboardDTO> obterEstatisticasDashboard() {
+        return ResponseEntity.ok(imovelService.obterEstatisticasDashboard());
     }
 
     // Buscar por ID
@@ -64,10 +70,5 @@ public class ImovelController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/imoveis/{id}")
-    public ResponseEntity<Imovel> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(imovelService.buscarPorId(id));
     }
 }
