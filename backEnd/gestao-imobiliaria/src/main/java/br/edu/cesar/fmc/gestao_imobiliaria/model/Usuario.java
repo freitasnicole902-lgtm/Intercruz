@@ -1,10 +1,7 @@
 package br.edu.cesar.fmc.gestao_imobiliaria.model;
 
 import jakarta.persistence.*;
-
-@Entity
-@Table(name = "tb_usuario")
-@Inheritance(strategy = InheritanceType.JOINED) // Uma forma de herdar em banco de dados
+@MappedSuperclass  // Uma forma de herdar em banco de dados
 public class Usuario {
 
     @Id
