@@ -104,6 +104,19 @@ body {
     font-weight: 600;
 }
 
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    object-fit: contain;
+}
+
 
 /* CONTEÚDO */
 
@@ -429,7 +442,70 @@ body {
     font-size: 20px;
     font-weight: 600;
 }
+/* MODAL DE CLIENTES */
 
+#modal-cliente .modal-contrato {
+    max-width: 840px;
+    padding: 28px 30px;
+}
+
+.cliente-documentos-titulo {
+    color: #173f9f;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 35px 0 45px;
+}
+
+.cliente-documentos {
+    border: 1px solid #e1e6ef;
+}
+
+.cliente-documentos-header {
+    padding: 16px 30px;
+    background: #fafbfd;
+    border-bottom: 1px solid #e1e6ef;
+    color: #8290a8;
+    font-weight: 600;
+}
+
+.cliente-documento-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #e1e6ef;
+    color: #667085;
+    font-size: 13px;
+}
+
+.cliente-documentos-footer {
+    padding: 8px 18px;
+}
+
+.cliente-documentos-footer button {
+    background: #eaf2ff;
+    color: #173f9f;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 12px;
+    min-width: 196px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.cliente-documentos-footer button span {
+    background: #103A79;
+    color: white;
+    padding: 1px 5px;
+    margin-right: 25px;
+}
+
+@media (max-width: 520px) {
+    #modal-cliente .modal-contrato {
+        padding: 22px 18px;
+    }
+
+    .cliente-documentos-titulo {
+        margin: 30px 0 20px;
+    }
+}
 
 /*   BOTÃO FECHAR   */
 
