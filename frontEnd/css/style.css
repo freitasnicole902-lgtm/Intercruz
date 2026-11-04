@@ -125,7 +125,6 @@ body {
     width: calc(100% - 270px);
 }
 
-
 /* TOPO */
 
 .topbar {
@@ -183,30 +182,56 @@ body {
 
 .card-dashboard {
     background-color: white;
-
     border: 1px solid #e1e6ef;
     border-radius: 14px;
-
     padding: 25px;
-
     min-height: 120px;
-
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: 16px;
 }
 
 .card-dashboard span {
-    display: block;
+    grid-column: 1;
+    grid-row: 1;
 
     font-size: 13px;
+    font-weight: 600;
     text-transform: uppercase;
-
     color: #62728e;
-
-    margin-bottom: 12px;
 }
 
+.card-dashboard img {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    box-sizing: border-box;
+    object-fit: contain;
+
+    background-color: var(--cor-icone, #eaf1fd);
+    border-radius: 8px;
+}
+
+.card-azul     { --cor-icone: #eaf1fd; }
+.card-verde    { --cor-icone: #e6f7ee; }
+.card-laranja  { --cor-icone: #fff3e0; }
+.card-vermelho { --cor-icone: #fdeaea; }
+.card-cinza    { --cor-icone: #FAFAFA; }
+.card-vermelho    { --cor-icone: #FFE3E3; }
+
 .card-dashboard strong {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
     font-size: 30px;
+    color: #1b3a7a;
 }
 
 /* CABEÇALHO DA PÁGINA */
@@ -296,6 +321,19 @@ body {
 
 .codigo {
     color: #1748b5;
+}
+
+.icone-acao {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.acao {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
 }
 
 

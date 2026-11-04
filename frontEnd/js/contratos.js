@@ -138,7 +138,7 @@ function mostrarContratos() {
                         class="btn-ver-contrato"
                         title="Ver contrato"
                         data-codigo="${codigoSeguro}">
-                    ◉
+                        <img src="formsIcons/olho.png" alt="Visualizar" class="icone-acao">
                 </button>
             </td>
         `;

@@ -231,8 +231,10 @@ function mostrarImoveis() {
                         <span class="contrato">Sem contrato</span>
                     </td>
                     <td>
-                        <button class="acao" title="Editar">✏️</button>
-                        <button class="acao" title="Excluir" onclick="excluirImovel(${imovel.id})">🗑️</button>
+                        <button class="acao" title="Visualizar">
+                            <img src="formsIcons/olho.png" alt="Visualizar" class="icone-acao">
+                        </button>
+                        
                     </td>
                 `;
                 listaImoveis.appendChild(linha);
