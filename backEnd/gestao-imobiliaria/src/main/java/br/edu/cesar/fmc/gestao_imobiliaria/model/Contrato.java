@@ -17,6 +17,16 @@ public class Contrato {
     private double valorContrato;
     private int mes; 
 
+    @ManyToOne 
+    @JoinColumn(name = "imovel_id")
+    private Imovel imovel;
+
+    @ManyToOne 
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+
+
     @Enumerated(EnumType.STRING)
     private TipoContrato tipoContrato;
 
