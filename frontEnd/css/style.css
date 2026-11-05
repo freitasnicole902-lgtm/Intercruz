@@ -178,6 +178,8 @@ body {
     gap: 20px;
 
     padding-top: 30px;
+
+    padding-bottom: 30px;
 }
 
 .card-dashboard {
@@ -216,7 +218,7 @@ body {
     object-fit: contain;
 
     background-color: var(--cor-icone, #eaf1fd);
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .card-azul     { --cor-icone: #eaf1fd; }
@@ -227,6 +229,62 @@ body {
 .card-vermelho    { --cor-icone: #FFE3E3; }
 
 .card-dashboard strong {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    font-size: 30px;
+    color: #1b3a7a;
+}
+
+
+.card-financeiro {
+    background-color: white;
+    border: 1px solid #e1e6ef;
+    border-radius: 14px;
+    padding: 25px;
+    min-height: 120px;
+    min-width: 380px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: 16px;
+}
+
+.card-financeiro span {
+    grid-column: 1;
+    grid-row: 1;
+
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #62728e;
+}
+
+.card-financeiro img {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    box-sizing: border-box;
+    object-fit: contain;
+
+    background-color: var(--cor-icone, #eaf1fd);
+    border-radius: 4px;
+}
+
+.card-azul     { --cor-icone: #eaf1fd; }
+.card-verde    { --cor-icone: #e6f7ee; }
+.card-laranja  { --cor-icone: #fff3e0; }
+.card-vermelho { --cor-icone: #fdeaea; }
+.card-cinza    { --cor-icone: #FAFAFA; }
+.card-vermelho    { --cor-icone: #FFE3E3; }
+
+.card-financeiro strong {
     grid-column: 1 / -1;
     grid-row: 2;
 
