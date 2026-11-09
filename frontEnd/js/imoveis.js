@@ -14,11 +14,14 @@ const btnCancelar =
 const formulario =
     document.getElementById("form-imovel");
 
-const tipoRaw = document.getElementById("tipo") ? document.getElementById("tipo").value: "";
-const tipoEnum = tipoRaw.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+let todosImoveis= [];
 
-const situacaoRaw = document.getElementById("situacao") ? document.getElementById("situacao").value: "";
-const situacaoEnum = situacaoRaw.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+const campoBusca = document.getElementById("campoBusca");
+const filtroTipo = document.getElementById("filtroTipo");
+const filtroSituacao = document.getElementById("filtroSituacao");
+const filtroBairro = document.getElementById("filtroBairro");
+
+
 // ==================================================
 // ABRIR MODAL
 // ==================================================
@@ -69,86 +72,69 @@ modal.addEventListener("click", function (event) {
 });
 
 
+
 // ==================================================
 // CADASTRAR IMÓVEL
 // ==================================================
 
-formulario.addEventListener(
-    "submit",
-    function (event) {
+async function cadastrarImovel(imovel) {
+    try {
+        const response = await fetch(
+            "http://localhost:8080/api/imoveis",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(imovel)
+            }
+        );
 
-        event.preventDefault();
+        if (!response.ok) {
+            throw new Error("Não foi possível cadastrar o imóvel.");
+        }
 
+        await response.json();
 
-        const imovel = {
-
-            codigo:
-                document.getElementById("codigo").value,
-
-            tipo: tipoEnum,
-
-            endereco:
-                document.getElementById("endereco").value,
-
-            bairro:
-                document.getElementById("bairro").value,
-
-            cidade:
-                document.getElementById("cidade").value,
-
-            situacao: situacaoEnum,
-
-            valor:
-                Number(
-                    document.getElementById("valor").value
-                ),
-
-            area:
-                Number(
-                    document.getElementById("area").value
-                ),
-
-            quartos:
-                Number(
-                    document.getElementById("quartos").value
-                ),
-
-            observacoes:
-                document.getElementById("observacoes").value
-
-        };
-
-
-        // Pega os imóveis existentes
-
-       // Substitua a parte do localStorage por isso:
-    fetch("http://localhost:8080/api/imoveis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(imovel)
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Erro ao salvar");
-        return response.json();
-    })
-    .then(() => {
         alert("Imóvel cadastrado com sucesso!");
-        mostrarImoveis(); // Recarrega a tabela com os dados do banco
-    })
-    .catch(err => console.error("Erro no cadastro:", err));
-
-
-        // Atualiza tabela
-
-        mostrarImoveis();
-
-
-        // Fecha modal
 
         fecharModal();
 
+        await mostrarImoveis();
+
+    } catch (error) {
+        console.error("Erro no cadastro:", error);
+        alert(error.message);
     }
-);
+}
+
+
+// ==================================================
+// EVENTO DE ENVIO DO FORMULÁRIO
+// ==================================================
+
+formulario.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const imovel = {
+        codigo: document.getElementById("codigo").value.trim(),
+        tipo: document.getElementById("tipo").value,
+        endereco: document.getElementById("endereco").value.trim(),
+        bairro: document.getElementById("bairro").value.trim(),
+        cidade: document.getElementById("cidade").value.trim(),
+        situacao: document.getElementById("situacao").value,
+        valor: Number(document.getElementById("valor").value),
+        area: Number(document.getElementById("area").value),
+        quartos: Number(document.getElementById("quartos").value),
+        observacoes: document.getElementById("observacoes").value.trim()
+    };
+
+    await cadastrarImovel(imovel);
+
+});
+
+
 
 
 // ==================================================
@@ -156,102 +142,268 @@ formulario.addEventListener(
 // ==================================================
 
 function mostrarImoveis() {
+
     fetch('http://localhost:8080/api/imoveis')
+
         .then(response => {
+
             if (!response.ok) {
                 throw new Error('Erro ao buscar imóveis do servidor');
             }
+
             return response.json();
+
         })
+
         .then(imoveis => {
-            const listaImoveis = document.getElementById("lista-imoveis");
-            if (!listaImoveis) return;
 
-            listaImoveis.innerHTML = "";
+            // Armazena todos os imóveis recebidos do backend.
+            todosImoveis = imoveis;
 
-            if (imoveis.length === 0) {
+            // Atualiza as opções do filtro de bairros.
+            popularFiltroBairros(todosImoveis);
+
+            // Aplica os filtros e atualiza a tabela.
+            aplicarFiltros();
+
+        })
+
+        .catch(error => {
+
+            console.error('Erro de integração:', error);
+
+            const listaImoveis =
+                document.getElementById("lista-imoveis");
+
+            if (listaImoveis) {
+
                 listaImoveis.innerHTML = `
                     <tr>
-                        <td colspan="8" style="text-align: center;">
-                            Nenhum imóvel cadastrado no banco de dados.
+                        <td colspan="8"
+                            style="color: red; text-align: center;">
+
+                            Erro ao conectar com o backend.
+                            Certifique-se que o Spring Boot
+                            está em execução na porta 8080.
+
                         </td>
                     </tr>
                 `;
+
+            }
+
+        });
+
+}
+
+
+
+// ==================================================
+// RENDERIZAR IMÓVEIS NA TABELA
+// ==================================================
+
+function renderizarImoveis(imoveis) {
+
+    const listaImoveis = document.getElementById("lista-imoveis");
+
+    if (!listaImoveis) return;
+
+    // Limpa a tabela antes de renderizar novamente.
+    listaImoveis.innerHTML = "";
+
+    // Verifica se existem imóveis.
+    if (imoveis.length === 0) {
+        listaImoveis.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align: center;">
+                    Nenhum imóvel encontrado.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Percorre os imóveis recebidos.
+    imoveis.forEach(function (imovel) {
+
+        const linha = document.createElement("tr");
+
+        // Redirecionamento para detalhes do imóvel.
+        linha.style.cursor = "pointer";
+
+        linha.addEventListener("click", function (event) {
+
+            if (event.target.closest("button")) {
                 return;
             }
 
-            imoveis.forEach(function (imovel) {
-                const linha = document.createElement("tr");
+            window.location.href =
+                `detalhesImovel.html?id=${imovel.id}`;
 
-                // Redirecionamento para detalhes do imóvel ao clicar na linha
-                linha.style.cursor = "pointer";
-                linha.addEventListener("click", function (event) {
-                    if (event.target.closest("button")) {
-                        return; // Ignora o clique se for nos botões de ação
-                    }
-                    window.location.href = `detalhesImovel.html?id=${imovel.id}`;
-                });
-
-                let classeStatus = "";
-                const statusNormalizado = (imovel.situacao || "").toUpperCase();
-                if (statusNormalizado === "DISPONIVEL" || statusNormalizado === "DISPONÍVEL") {
-                    classeStatus = "status-disponivel";
-                } else if (statusNormalizado === "ALUGADO") {
-                    classeStatus = "status-alugado";
-                } else {
-                    classeStatus = "status-manutencao";
-                }
-
-                linha.innerHTML = `
-                    <td>
-                        <span class="codigo">IMV-${imovel.id || '-'}</span>
-                    </td>
-                    <td>
-                        <strong>${imovel.titulo || 'Imóvel'}</strong><br>
-                        ${imovel.endereco || 'Endereço não informado'}
-                        <br>
-                        <small>${imovel.cidade || ''} ${imovel.quartos ? '• ' + imovel.quartos + ' qto(s)' : ''}</small>
-                    </td>
-                    <td>
-                        ${imovel.tipo || '-'}
-                    </td>
-                    <td>
-                        <span class="status ${classeStatus}">
-                            ${imovel.situacao || 'Disponível'}
-                        </span>
-                    </td>
-                    <td>-</td>
-                    <td>
-                        R$ ${Number(imovel.valor || 0).toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        })}
-                    </td>
-                    <td>
-                        <span class="contrato">Sem contrato</span>
-                    </td>
-                    <td>
-                        <button class="acao" title="Editar">✏️</button>
-                        <button class="acao" title="Excluir" onclick="excluirImovel(${imovel.id})">🗑️</button>
-                    </td>
-                `;
-                listaImoveis.appendChild(linha);
-            });
-        })
-        .catch(error => {
-            console.error('Erro de integração:', error);
-            const listaImoveis = document.getElementById("lista-imoveis");
-            if (listaImoveis) {
-                listaImoveis.innerHTML = `
-                    <tr>
-                        <td colspan="8" style="color: red; text-align: center;">
-                            Erro ao conectar com o backend. Certifique-se que o Spring Boot está em execução na porta 8080.
-                        </td>
-                    </tr>
-                `;
-            }
         });
+
+        // Define a classe visual da situação.
+        let classeStatus = "";
+
+        const statusNormalizado =
+            (imovel.situacao || "").toUpperCase();
+
+        if (
+            statusNormalizado === "DISPONIVEL" ||
+            statusNormalizado === "DISPONÍVEL"
+        ) {
+            classeStatus = "status-disponivel";
+
+        } else if (statusNormalizado === "ALUGADO") {
+
+            classeStatus = "status-alugado";
+
+        } else {
+
+            classeStatus = "status-manutencao";
+
+        }
+
+        // Monta as colunas da tabela.
+        linha.innerHTML = `
+            <td>
+                <span class="codigo">
+                    ${imovel.codigo || '-'}
+                </span>
+            </td>
+
+            <td>
+                <strong>${imovel.titulo || 'Imóvel'}</strong><br>
+                ${imovel.endereco || 'Endereço não informado'}
+                <br>
+                <small>
+                    ${imovel.cidade || ''}
+                    ${imovel.quartos ? '• ' + imovel.quartos + ' qto(s)' : ''}
+                </small>
+            </td>
+
+            <td>
+                ${imovel.tipo || '-'}
+            </td>
+
+            <td>
+                <span class="status ${classeStatus}">
+                    ${imovel.situacao || 'Disponível'}
+                </span>
+            </td>
+
+            <td>-</td>
+
+            <td>
+                R$ ${Number(imovel.valor || 0).toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                })}
+            </td>
+
+            <td>
+                <span class="contrato">Sem contrato</span>
+            </td>
+
+            <td>
+                <button class="acao" title="Editar">✏️</button>
+
+                <button
+                    class="acao"
+                    title="Excluir"
+                    onclick="excluirImovel(${imovel.id})">
+                    🗑️
+                </button>
+            </td>
+        `;
+
+        listaImoveis.appendChild(linha);
+
+    });
+
 }
+
+
+function normalizar(texto) {
+    return (texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+function popularFiltroBairros(imoveis) {
+
+    const bairroSelecionado = filtroBairro.value;
+
+    const bairros = [
+        ...new Set(
+            imoveis
+                .map(imovel => imovel.bairro)
+                .filter(bairro => bairro && bairro.trim() !== "")
+        )
+    ];
+
+    bairros.sort((a, b) =>
+        a.localeCompare(b, "pt-BR")
+    );
+
+    filtroBairro.innerHTML =
+        '<option value="">Todos os bairros</option>';
+
+    bairros.forEach(bairro => {
+
+        const option = document.createElement("option");
+
+        option.value = bairro;
+        option.textContent = bairro;
+
+        filtroBairro.appendChild(option);
+
+    });
+
+    // Mantém a seleção anterior, se o bairro ainda existir.
+    if (bairros.includes(bairroSelecionado)) {
+        filtroBairro.value = bairroSelecionado;
+    }
+}
+
+function aplicarFiltros() {
+
+    const busca = normalizar(campoBusca.value);
+
+    const tipo = filtroTipo.value;
+    const situacao = filtroSituacao.value;
+    const bairro = filtroBairro.value;
+
+    const filtrados = todosImoveis.filter(imovel => {
+
+        const correspondeBusca = [
+            imovel.codigo,
+            imovel.endereco,
+            imovel.bairro,
+            imovel.cidade
+        ].some(valor =>
+            normalizar(valor).includes(busca)
+        );
+
+        return correspondeBusca
+            && (!tipo || imovel.tipo === tipo)
+            && (!situacao || imovel.situacao === situacao)
+            && (!bairro || imovel.bairro === bairro);
+
+    });
+
+    renderizarImoveis(filtrados);
+}
+
+campoBusca.addEventListener("input", aplicarFiltros);
+
+filtroTipo.addEventListener("change", aplicarFiltros);
+
+filtroSituacao.addEventListener("change", aplicarFiltros);
+
+filtroBairro.addEventListener("change", aplicarFiltros);
 
 
 // ==================================================

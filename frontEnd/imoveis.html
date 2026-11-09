@@ -146,23 +146,23 @@
                         Todos os tipos
                     </option>
 
-                    <option value="Apartamento">
+                    <option value="APARTAMENTO">
                         Apartamento
                     </option>
 
-                    <option value="Casa">
+                    <option value="CASA">
                         Casa
                     </option>
 
-                    <option value="Terreno">
+                    <option value="TERRENO">
                         Terreno
                     </option>
 
-                    <option value="Galpão">
+                    <option value="GALPAO">
                         Galpão
                     </option>
 
-                    <option value="Comercial">
+                    <option value="COMERCIAL">
                         Comercial
                     </option>
 
@@ -177,28 +177,26 @@
                         Todas as situações
                     </option>
 
-                    <option value="Alugado">
+                    <option value="ALUGADO">
                         Alugado
                     </option>
 
-                    <option value="Disponível">
+                    <option value="DISPONIVEL">
                         Disponível
                     </option>
 
-                    <option value="Em Manutenção">
+                    <option value="EM_MANUTENCAO">
                         Em Manutenção
                     </option>
 
                 </select>
 
 
-                <select class="form-select">
+                <select id="filtroBairro" class="form-select"> 
 
-                    <option>
-                        Todos os bairros
-                    </option>
-
+                    <option value="">Todos os bairros</option>
                 </select>
+                
 
             </div>
 
@@ -284,6 +282,7 @@
                 <input
                     type="text"
                     id="codigo"
+                    name="codigo"
                     placeholder="Ex: IMV-001"
                     required>
 
@@ -298,29 +297,29 @@
                     Tipo
                 </label>
 
-                <select id="tipo" required>
+                <select id="tipo" name="tipo">
 
                     <option value="">
                         Selecione
                     </option>
 
-                    <option value="Apartamento">
+                    <option value="APARTAMENTO">
                         Apartamento
                     </option>
 
-                    <option value="Casa">
+                    <option value="CASA">
                         Casa
                     </option>
 
-                    <option value="Terreno">
+                    <option value="TERRENO">
                         Terreno
                     </option>
 
-                    <option value="Galpão">
+                    <option value="GALPAO">
                         Galpão
                     </option>
 
-                    <option value="Comercial">
+                    <option value="COMERCIAL">
                         Comercial
                     </option>
 
@@ -340,6 +339,7 @@
                 <input
                     type="text"
                     id="endereco"
+                    name="endereco"
                     placeholder="Rua, número"
                     required>
 
@@ -357,6 +357,7 @@
                 <input
                     type="text"
                     id="bairro"
+                    name="bairro"
                     placeholder="Ex: Centro"
                     required>
 
@@ -374,6 +375,7 @@
                 <input
                     type="text"
                     id="cidade"
+                    name="cidade"
                     placeholder="Ex: Manaus"
                     required>
 
@@ -388,21 +390,21 @@
                     Situação
                 </label>
 
-                <select id="situacao" required>
+                <select id="situacao" name="situacao" required>
 
                     <option value="">
                         Selecione
                     </option>
 
-                    <option value="Disponível">
+                    <option value="DISPONIVEL">
                         Disponível
                     </option>
 
-                    <option value="Alugado">
+                    <option value="ALUGADO">
                         Alugado
                     </option>
 
-                    <option value="Em Manutenção">
+                    <option value="EM_MANUTENCAO">
                         Em manutenção
                     </option>
 
@@ -424,6 +426,7 @@
                     <input
                         type="number"
                         id="valor"
+                        name="valor"
                         placeholder="Ex: 12000"
                         min="0"
                         step="0.01"
@@ -441,6 +444,7 @@
                     <input
                         type="number"
                         id="area"
+                        name="area"
                         placeholder="Ex: 80"
                         min="0"
                         step="0.01"
@@ -462,6 +466,7 @@
                 <input
                     type="number"
                     id="quartos"
+                    name="quartos"
                     placeholder="Ex: 3"
                     min="0"
                     required>
@@ -479,6 +484,7 @@
 
                 <textarea
                     id="observacoes"
+                    name="observacoes"
                     placeholder="Digite informações adicionais sobre o imóvel..."
                     rows="4"></textarea>
 
