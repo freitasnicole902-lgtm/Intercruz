@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -36,22 +37,26 @@ public class ContratoController {
 
     // 3. CRIAR CONTRATO (POST) -> http://localhost:8080/api/contratos
     @PostMapping
-    public ResponseEntity<Contrato> criar(@RequestBody Contrato contrato) {
+    public ResponseEntity<Contrato> criar(@Valid @RequestBody Contrato contrato) {
         Contrato novoContrato = contratoService.salvar(contrato);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoContrato); 
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoContrato);
     }
 
     // 4. ATUALIZAR CONTRATO (PUT) -> http://localhost:8080/api/contratos/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<Contrato> atualizar(@PathVariable long id, @RequestBody Contrato contratoAtualizado) {
+    public ResponseEntity<Contrato> atualizar(
+            @PathVariable long id,
+            @Valid @RequestBody Contrato contratoAtualizado) {
+
         Contrato contratoExistente = contratoService.buscarPorId(id);
+
         if (contratoExistente == null) {
             return ResponseEntity.notFound().build();
         }
-        
-        // Seta o ID da URL no objeto recebido para garantir que vai atualizar o registro certo
-        contratoAtualizado.setId(id); 
+
+        contratoAtualizado.setId(id);
         Contrato contratoSalvo = contratoService.salvar(contratoAtualizado);
+
         return ResponseEntity.ok(contratoSalvo);
     }
 

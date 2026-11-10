@@ -22,7 +22,7 @@ public class Cliente {
     @Column(columnDefinition = "TEXT")
     private String observacoes;
 
-    private double renda;
+    private Double renda;
 
     @Enumerated(EnumType.STRING)
 
@@ -31,7 +31,7 @@ public class Cliente {
     public Cliente() { }
 
     //Construtor completo
-    public Cliente(String nome, String rgCpf, String telefone, String email, String observacoes, double renda, TipoPessoa tipoPessoa) {
+    public Cliente(String nome, String rgCpf, String telefone, String email, String observacoes, Double renda, TipoPessoa tipoPessoa) {
         this.nome = nome;
         this.rgCpf = rgCpf;
         this.telefone = telefone;
@@ -59,8 +59,8 @@ public class Cliente {
     public String getObservacoes() { return observacoes; }
     public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 
-    public double getRenda() { return renda; }
-    public void setRenda(double renda) { this.renda = renda; }
+    public Double getRenda() { return renda; }
+    public void setRenda(Double renda) { this.renda = renda; }
 
     public TipoPessoa getTipoPessoa() { return tipoPessoa; }
     public void setTipoPessoa(TipoPessoa tipoPessoa) { this.tipoPessoa = tipoPessoa; }

@@ -1,3 +1,6 @@
+
+const API_URL = "http://localhost:8080/api";
+
 const listaContratos = document.getElementById("lista-contratos");
 const modalContrato = document.getElementById("modal-contrato");
 const formularioContrato = document.getElementById("form-contrato");
@@ -9,14 +12,66 @@ const btnCancelarContrato = document.getElementById("btn-cancelar-contrato");
 const buscaContrato = document.getElementById("busca-contrato");
 const filtroSituacao = document.getElementById("filtro-situacao");
 
-function obterContratos() {
-    return JSON.parse(localStorage.getItem("contratos")) || [];
+const campoCliente = document.getElementById("inquilino-contrato");
+const campoImovel = document.getElementById("codigo-imovel");
+
+let contratos = [];
+let clientes = [];
+let imoveis = [];
+
+// Buscar dados do backend
+async function carregarDados() {
+    try {
+        const [resContratos, resClientes, resImoveis] =
+            await Promise.all([
+                fetch(`${API_URL}/contratos`),
+                fetch(`${API_URL}/clientes`),
+                fetch(`${API_URL}/imoveis`)
+            ]);
+
+        if (!resContratos.ok || !resClientes.ok || !resImoveis.ok) {
+            throw new Error("Não foi possível carregar os dados.");
+        }
+
+        contratos = await resContratos.json();
+        clientes = await resClientes.json();
+        imoveis = await resImoveis.json();
+
+        preencherClientes();
+        preencherImoveis();
+        mostrarContratos();
+
+    } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
+        alert("Erro ao conectar com o backend. Verifique se o Spring Boot está rodando.");
+    }
 }
 
-function salvarContratos(contratos) {
-    localStorage.setItem("contratos", JSON.stringify(contratos));
+// Preencher seleção de clientes
+function preencherClientes() {
+    campoCliente.innerHTML = '<option value="">Selecione o cliente</option>';
+
+    clientes.forEach(cliente => {
+        const opcao = document.createElement("option");
+        opcao.value = cliente.id;
+        opcao.textContent = cliente.nome;
+        campoCliente.appendChild(opcao);
+    });
 }
 
+// Preencher seleção de imóveis
+function preencherImoveis() {
+    campoImovel.innerHTML = '<option value="">Selecione o imóvel</option>';
+
+    imoveis.forEach(imovel => {
+        const opcao = document.createElement("option");
+        opcao.value = imovel.id;
+        opcao.textContent = `${imovel.codigo} - ${imovel.titulo || imovel.tipo}`;
+        campoImovel.appendChild(opcao);
+    });
+}
+
+// Modal
 function abrirModal() {
     modalContrato.style.display = "flex";
 }
@@ -30,41 +85,86 @@ btnNovoContrato.addEventListener("click", abrirModal);
 btnFecharModalContrato.addEventListener("click", fecharModal);
 btnCancelarContrato.addEventListener("click", fecharModal);
 
-modalContrato.addEventListener("click", function (event) {
+modalContrato.addEventListener("click", event => {
     if (event.target === modalContrato) {
         fecharModal();
     }
 });
 
-formularioContrato.addEventListener("submit", function (event) {
-    event.preventDefault();
+// Converter tipo para o enum do Java
+function converterTipo(tipo) {
+    const tipos = {
+        "Apartamento": "APARTAMENTO",
+        "Casa": "CASA",
+        "Comercial": "COMERCIAL",
+        "Outro": "OUTRO"
+    };
 
-    const contratos = obterContratos();
+    return tipos[tipo] || tipo.toUpperCase();
+}
+
+// Cadastrar contrato no PostgreSQL
+formularioContrato.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
     const codigo = document.getElementById("codigo-contrato").value.trim();
 
-    if (contratos.some(contrato => contrato.codigo === codigo)) {
+    if (contratos.some(c => c.codigo.toLowerCase() === codigo.toLowerCase())) {
         alert("Já existe um contrato com esse código.");
+        return;
+    }
+
+    const dataInicio = document.getElementById("data-inicio").value;
+    const dataTermino = document.getElementById("data-termino").value;
+
+    if (dataTermino <= dataInicio) {
+        alert("A data de término deve ser posterior à data de início.");
         return;
     }
 
     const contrato = {
         codigo: codigo,
-        imovel: document.getElementById("codigo-imovel").value.trim(),
-        inquilino: document.getElementById("inquilino-contrato").value.trim(),
-        valor: Number(document.getElementById("valor-aluguel").value),
-        inicio: document.getElementById("data-inicio").value,
-        termino: document.getElementById("data-termino").value,
-        situacao: document.getElementById("situacao-contrato").value
+        dataInicio: dataInicio,
+        dataTermino: dataTermino,
+        valorContrato: Number(document.getElementById("valor-aluguel").value),
+        mes: Number(document.getElementById("vencimento-contrato").value),
+        imovel: {
+            id: Number(campoImovel.value)
+        },
+        cliente: {
+            id: Number(campoCliente.value)
+        },
+        tipoContrato: converterTipo(
+            document.getElementById("tipo-contrato").value
+        )
     };
 
-    contratos.push(contrato);
-    salvarContratos(contratos);
+    try {
+        const resposta = await fetch(`${API_URL}/contratos`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(contrato)
+        });
 
-    mostrarContratos();
-    fecharModal();
+        if (!resposta.ok) {
+            const erro = await resposta.text();
+            throw new Error(erro || `Erro HTTP: ${resposta.status}`);
+        }
+
+        alert("Contrato cadastrado com sucesso!");
+
+        fecharModal();
+        await carregarDados();
+
+    } catch (erro) {
+        console.error("Erro ao cadastrar contrato:", erro);
+        alert("Não foi possível cadastrar o contrato. Verifique os dados e o backend.");
+    }
 });
 
+// Formatação
 function formatarData(data) {
     if (!data) return "—";
 
@@ -79,20 +179,35 @@ function formatarAluguel(valor) {
     });
 }
 
-function mostrarContratos() {
-    const contratos = obterContratos();
+// Situação calculada pelas datas, pois o backend não possui campo situacao
+function obterSituacao(contrato) {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
 
+    const termino = new Date(contrato.dataTermino + "T00:00:00");
+    const inicio = new Date(contrato.dataInicio + "T00:00:00");
+
+    if (hoje > termino) return "Encerrado";
+    if (hoje < inicio) return "Pendente";
+
+    return "Ativo";
+}
+
+// Exibir contratos
+function mostrarContratos() {
     const busca = buscaContrato.value.trim().toLowerCase();
     const situacaoSelecionada = filtroSituacao.value;
 
-    const filtrados = contratos.filter(function (contrato) {
+    const filtrados = contratos.filter(contrato => {
+        const nomeCliente = contrato.cliente?.nome || "";
+
         const correspondeBusca =
             contrato.codigo.toLowerCase().includes(busca) ||
-            contrato.inquilino.toLowerCase().includes(busca);
+            nomeCliente.toLowerCase().includes(busca);
 
         const correspondeSituacao =
             !situacaoSelecionada ||
-            contrato.situacao === situacaoSelecionada;
+            obterSituacao(contrato) === situacaoSelecionada;
 
         return correspondeBusca && correspondeSituacao;
     });
@@ -108,58 +223,76 @@ function mostrarContratos() {
         return;
     }
 
-    filtrados.forEach(function (contrato) {
+    filtrados.forEach(contrato => {
         const linha = document.createElement("tr");
+
+        const situacao = obterSituacao(contrato);
 
         let classeStatus = "";
 
-        if (contrato.situacao === "Pendente") {
+        if (situacao === "Pendente") {
             classeStatus = "status-contrato-pendente";
-        } else if (contrato.situacao === "Encerrado") {
+        } else if (situacao === "Encerrado") {
             classeStatus = "status-contrato-encerrado";
         }
 
-        const codigoSeguro = contrato.codigo.replace(/'/g, "\\'");
+        const imovel = contrato.imovel || {};
+        const cliente = contrato.cliente || {};
 
-        linha.innerHTML = `
-            <td><span class="codigo-contrato">${contrato.codigo}</span></td>
-            <td>${contrato.imovel}</td>
-            <td>${contrato.inquilino}</td>
-            <td>${formatarData(contrato.inicio)}</td>
-            <td>${formatarData(contrato.termino)}</td>
-            <td>${formatarAluguel(contrato.valor)}</td>
-            <td>
-                <span class="status-contrato ${classeStatus}">
-                    ${contrato.situacao}
-                </span>
-            </td>
-            <td>
-                <button type="button"
-                        class="btn-ver-contrato"
-                        title="Ver contrato"
-                        data-codigo="${codigoSeguro}">
-                    ◉
-                </button>
-            </td>
-        `;
+        const dados = [
+            contrato.codigo,
+            imovel.codigo || `ID ${imovel.id}`,
+            cliente.nome || `ID ${cliente.id}`,
+            formatarData(contrato.dataInicio),
+            formatarData(contrato.dataTermino),
+            formatarAluguel(contrato.valorContrato)
+        ];
 
-        linha.querySelector(".btn-ver-contrato").addEventListener("click", function () {
+        dados.forEach(valor => {
+            const celula = document.createElement("td");
+            celula.textContent = valor;
+            linha.appendChild(celula);
+        });
+
+        const celulaStatus = document.createElement("td");
+        const etiqueta = document.createElement("span");
+
+        etiqueta.className = `status-contrato ${classeStatus}`;
+        etiqueta.textContent = situacao;
+
+        celulaStatus.appendChild(etiqueta);
+        linha.appendChild(celulaStatus);
+
+        const celulaAcao = document.createElement("td");
+        const botao = document.createElement("button");
+
+        botao.type = "button";
+        botao.className = "btn-ver-contrato";
+        botao.title = "Ver contrato";
+        botao.textContent = "◉";
+
+        botao.addEventListener("click", () => {
             alert(
                 `Contrato: ${contrato.codigo}\n` +
-                `Imóvel: ${contrato.imovel}\n` +
-                `Inquilino: ${contrato.inquilino}\n` +
-                `Início: ${formatarData(contrato.inicio)}\n` +
-                `Término: ${formatarData(contrato.termino)}\n` +
-                `Aluguel: ${formatarAluguel(contrato.valor)}\n` +
-                `Situação: ${contrato.situacao}`
+                `Imóvel: ${imovel.codigo || imovel.id}\n` +
+                `Cliente: ${cliente.nome || cliente.id}\n` +
+                `Início: ${formatarData(contrato.dataInicio)}\n` +
+                `Término: ${formatarData(contrato.dataTermino)}\n` +
+                `Valor: ${formatarAluguel(contrato.valorContrato)}\n` +
+                `Situação: ${situacao}`
             );
         });
+
+        celulaAcao.appendChild(botao);
+        linha.appendChild(celulaAcao);
 
         listaContratos.appendChild(linha);
     });
 }
 
+// Filtros
 buscaContrato.addEventListener("input", mostrarContratos);
 filtroSituacao.addEventListener("change", mostrarContratos);
 
-mostrarContratos();
+// Inicialização
+carregarDados();
