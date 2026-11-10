@@ -54,7 +54,7 @@
                     <span>Financeiro</span>
                 </a>
 
-                <a href="#" class="menu-item">
+                <a href="documentos.html" class="menu-item">
                     <img src="icons/tabDocumentos.png" alt="" class="menu-icon">
                     <span>Documentos</span>
                 </a>
@@ -90,7 +90,7 @@
                 <h1>Financeiro</h1>
             </header>
  
-            <section class="content">
+            <section class="content financeiro-page">
 
                  <div class="page-header">
                     <h2>Controle de finanças</h2>
@@ -105,25 +105,36 @@
                 <!-- CARDS -->
                 <div class="cards">
 
-                    <div class="card-financeiro card-verde">
+                    <div class="card-dashboard card-verde">
                         <span>Total de receitas</span>
                         <img src="dashBoardIcons/receita.png" alt="" class="menu-icon">
                         <strong>R$ 50.456,65</strong>
                     </div>
 
-                    <div class="card-financeiro card-vermelho">
+                    <div class="card-dashboard card-vermelho">
                         <span>Total de despesas</span>
                         <img src="dashBoardIcons/despesas.png" alt="" class="menu-icon">
                         <strong>R$ 23.632,86</strong>
                     </div>
 
-                    <div class="card-financeiro card-azul">
+                    <div class="card-dashboard card-azul">
                         <span>Saldo</span>
                         <img src="icons/financeiroActivated.png" alt="" class="menu-icon">
                         <strong>R$ 26.823,79</strong>
                     </div>
 
                 </div>
+
+                <!-- GRÁFICO DE RECEITAS X DESPESAS -->
+<div class="grafico-container">
+
+    <h3>Receitas X Despesas mensais</h3>
+
+    <div class="grafico-area">
+        <canvas id="graficoFinanceiro"></canvas>
+    </div>
+
+</div>
 
                 <div class="contratos-filtros">
 
@@ -173,7 +184,43 @@
                 </select>
 
             </div>
-          
+          <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Data</th>
+
+                            <th>Descrição</th>
+
+                            <th>Imóvel</th>
+
+                            <th>Categoria</th>
+
+                            <th>Tipo</th>
+
+                            <th>Valor</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="lista-movimentacoes">
+
+                        <tr>
+
+                            <td colspan="6">Nenhuma movimentação cadastrada.</td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
 
 
             </section>
@@ -255,7 +302,10 @@
 
     </div>
 </div>
-<script src="js/financeiro.js"></script>
-</body>
+<!-- Biblioteca do gráfico -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="js/financeiro.js"></script>
+
+</body>
 </html>
