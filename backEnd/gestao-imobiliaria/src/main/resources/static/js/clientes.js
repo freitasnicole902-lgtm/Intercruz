@@ -1,6 +1,5 @@
-
 // ==========================================
-// CONFIGURAÃ‡ÃƒO DA API
+// CONFIGURAÇÃO DA API
 // ==========================================
 
 const API_CLIENTES = "/api/clientes";
@@ -72,7 +71,7 @@ modalCliente.addEventListener("click", function (event) {
 
 
 // ==========================================
-// MANIPULAÃ‡ÃƒO DE DOCUMENTOS
+// MANIPULAÇÃO DE DOCUMENTOS
 // ==========================================
 
 const inputArquivo = document.getElementById("arquivo-cliente");
@@ -109,7 +108,7 @@ function mostrarDocumentos() {
 
         const remover = document.createElement("button");
         remover.type = "button";
-        remover.textContent = "Ã—";
+        remover.textContent = "×";
 
         remover.addEventListener("click", function () {
             documentosSelecionados.splice(index, 1);
@@ -125,7 +124,7 @@ function mostrarDocumentos() {
 
 
 // ==========================================
-// COMUNICAÃ‡ÃƒO COM A API
+// COMUNICAÇÃO COM A API
 // ==========================================
 
 // LISTAR CLIENTES
@@ -199,10 +198,10 @@ async function obterErroAPI(response) {
         const erro = await response.json();
 
         return erro.detail || erro.message ||
-            "Erro na operaÃ§Ã£o. CÃ³digo HTTP: " + response.status;
+            "Erro na operação. Código HTTP: " + response.status;
 
     } catch {
-        return "Erro na operaÃ§Ã£o. CÃ³digo HTTP: " + response.status;
+        return "Erro na operação. Código HTTP: " + response.status;
     }
 }
 
@@ -269,12 +268,12 @@ function preencherTabelaClientes(clientes) {
         const tipoPessoa = document.createElement("td");
         tipoPessoa.textContent =
             cliente.tipoPessoa === "PESSOA_FISICA"
-                ? "Pessoa FÃ­sica"
-                : "Pessoa JurÃ­dica";
+                ? "Pessoa Física"
+                : "Pessoa Jurídica";
 
         const acoes = document.createElement("td");
 
-        // BOTÃƒO EDITAR
+        // BOTÃO EDITAR
 
         const btnEditar = document.createElement("button");
         btnEditar.type = "button";
@@ -284,7 +283,7 @@ function preencherTabelaClientes(clientes) {
             editarCliente(cliente);
         });
 
-        // BOTÃƒO EXCLUIR
+        // BOTÃO EXCLUIR
 
         const btnExcluir = document.createElement("button");
         btnExcluir.type = "button";
@@ -380,7 +379,7 @@ async function deletarCliente(id) {
     try {
         await excluirCliente(id);
 
-        alert("Cliente excluÃ­do com sucesso!");
+        alert("Cliente excluído com sucesso!");
 
         await renderizarClientes();
 
@@ -392,7 +391,7 @@ async function deletarCliente(id) {
 
 
 // ==========================================
-// CADASTRAR E ATUALIZAR PELO FORMULÃRIO
+// CADASTRAR E ATUALIZAR PELO FORMULÁRIO
 // ==========================================
 
 formularioCliente.addEventListener("submit", async function (event) {
@@ -440,7 +439,7 @@ formularioCliente.addEventListener("submit", async function (event) {
 
 
 // ==========================================
-// INICIALIZAÃ‡ÃƒO
+// INICIALIZAÇÃO
 // ==========================================
 
 renderizarClientes();

@@ -91,12 +91,12 @@ async function cadastrarImovel(imovel) {
         );
 
         if (!response.ok) {
-            throw new Error("NÃ£o foi possÃ­vel cadastrar o imÃ³vel.");
+            throw new Error("Não foi possível cadastrar o imovél");
         }
 
         await response.json();
 
-        alert("ImÃ³vel cadastrado com sucesso!");
+        alert("Imóvel cadastrado com sucesso!");
 
         fecharModal();
 
@@ -148,7 +148,7 @@ function mostrarImoveis() {
         .then(response => {
 
             if (!response.ok) {
-                throw new Error('Erro ao buscar imÃ³veis do servidor');
+                throw new Error('Erro ao buscar imóveis do servidor');
             }
 
             return response.json();
@@ -170,7 +170,7 @@ function mostrarImoveis() {
 
         .catch(error => {
 
-            console.error('Erro de integraÃ§Ã£o:', error);
+            console.error('Erro de integração:', error);
 
             const listaImoveis =
                 document.getElementById("lista-imoveis");
@@ -184,7 +184,7 @@ function mostrarImoveis() {
 
                             Erro ao conectar com o backend.
                             Certifique-se que o Spring Boot
-                            estÃ¡ em execuÃ§Ã£o na porta 8080.
+                            está em execução na porta 8080.
 
                         </td>
                     </tr>
@@ -216,7 +216,7 @@ function renderizarImoveis(imoveis) {
         listaImoveis.innerHTML = `
             <tr>
                 <td colspan="8" style="text-align: center;">
-                    Nenhum imÃ³vel encontrado.
+                    Nenhum imóvel encontrado.
                 </td>
             </tr>
         `;
@@ -228,7 +228,7 @@ function renderizarImoveis(imoveis) {
 
         const linha = document.createElement("tr");
 
-        // Redirecionamento para detalhes do imÃ³vel.
+        // Redirecionamento para detalhes do imóvel.
         linha.style.cursor = "pointer";
 
         linha.addEventListener("click", function (event) {
@@ -250,7 +250,7 @@ function renderizarImoveis(imoveis) {
 
         if (
             statusNormalizado === "DISPONIVEL" ||
-            statusNormalizado === "DISPONÃVEL"
+            statusNormalizado === "DISPONÍVEL"
         ) {
             classeStatus = "status-disponivel";
 
@@ -273,12 +273,12 @@ function renderizarImoveis(imoveis) {
             </td>
 
             <td>
-                <strong>${imovel.titulo || 'ImÃ³vel'}</strong><br>
-                ${imovel.endereco || 'EndereÃ§o nÃ£o informado'}
+                <strong>${imovel.titulo || 'Imóvel'}</strong><br>
+                ${imovel.endereco || 'Endereçoo não informado'}
                 <br>
                 <small>
                     ${imovel.cidade || ''}
-                    ${imovel.quartos ? 'â€¢ ' + imovel.quartos + ' qto(s)' : ''}
+                    ${imovel.quartos ? 'Há ' + imovel.quartos + ' qto(s)' : ''}
                 </small>
             </td>
 
@@ -288,7 +288,7 @@ function renderizarImoveis(imoveis) {
 
             <td>
                 <span class="status ${classeStatus}">
-                    ${imovel.situacao || 'DisponÃ­vel'}
+                    ${imovel.situacao || 'Disponível'}
                 </span>
             </td>
 
@@ -306,13 +306,13 @@ function renderizarImoveis(imoveis) {
             </td>
 
             <td>
-                <button class="acao" title="Editar">âœï¸</button>
+                <button class="acao" title="Editar">✏️</button>
 
                 <button
                     class="acao"
                     title="Excluir"
                     onclick="excluirImovel(${imovel.id})">
-                    ðŸ—‘ï¸
+                    🗑️
                 </button>
             </td>
         `;
@@ -411,16 +411,16 @@ filtroBairro.addEventListener("change", aplicarFiltros);
 // ==================================================
 
     function excluirImovel(id) {
-        if (confirm(`Tem certeza que deseja excluir o imÃ³vel ID ${id}?`)) {
+        if (confirm(`Tem certeza que deseja excluir o imóvel ID ${id}?`)) {
         fetch(`/api/imoveis/${id}`, {
             method: "DELETE"
         })
         .then(response => {
             if (response.ok) {
-                alert("ImÃ³vel excluÃ­do com sucesso!");
+                alert("Imóvel excluído com sucesso!");
                 mostrarImoveis(); // Recarrega a lista do banco
             } else {
-                alert("Erro ao excluir imÃ³vel do banco de dados.");
+                alert("Erro ao excluir imóvel do banco de dados.");
             }
         })
         .catch(error => console.error("Erro ao excluir:", error));

@@ -57,27 +57,34 @@ function aplicarEstiloSituacao(situacao) {
     }
 }
 
-function carregarImovel() {
+async function carregarImovel() {
     const parametros = new URLSearchParams(window.location.search);
-    const indiceTexto = parametros.get("index");
+    const idTexto = parametros.get("id");
 
-    const imoveis =
-        JSON.parse(localStorage.getItem("imoveis")) || [];
-
-    if (
-        indiceTexto === null ||
-        indiceTexto.trim() === "" ||
-        !Number.isInteger(Number(indiceTexto)) ||
-        Number(indiceTexto) < 0 ||
-        Number(indiceTexto) >= imoveis.length
-    ) {
+    if (!idTexto || !/^\d+$/.test(idTexto)) {
         mostrarErro(
-            "Imóvel não encontrado. Volte à lista e selecione um imóvel."
+            "Identificador do imóvel inválido ou não informado."
         );
         return;
     }
 
-    const imovel = imoveis[Number(indiceTexto)];
+    try {
+        const response = await fetch(
+            `/api/imoveis/${encodeURIComponent(idTexto)}`
+        );
+
+        if (response.status === 404) {
+            mostrarErro("Imóvel não encontrado.");
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar imóvel no servidor.");
+        }
+
+        const imovel = await response.json();
+
+    
 
     document.getElementById("titulo-imovel").textContent =
         `Imóvel ${imovel.codigo || ""}`;
@@ -120,6 +127,12 @@ function carregarImovel() {
     mensagemCarregamento.hidden = true;
     mensagemErro.hidden = true;
     conteudoDetalhes.hidden = false;
+} catch (error) {
+    console.error(error);
+    mostrarErro(
+        "Não foi possível carregar os dados do imóvel"
+    );
+}
 }
 
 function mostrarErro(mensagem) {
@@ -128,4 +141,4 @@ function mostrarErro(mensagem) {
     mensagemErro.hidden = false;
 }
 
-carregarImovel();
+carregarImovel(); 

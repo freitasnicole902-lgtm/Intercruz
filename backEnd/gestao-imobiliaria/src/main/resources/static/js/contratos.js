@@ -1,4 +1,3 @@
-
 const API_URL = "/api";
 
 const listaContratos = document.getElementById("lista-contratos");
@@ -30,7 +29,7 @@ async function carregarDados() {
             ]);
 
         if (!resContratos.ok || !resClientes.ok || !resImoveis.ok) {
-            throw new Error("NÃ£o foi possÃ­vel carregar os dados.");
+            throw new Error("Não foi possível carregar os dados.");
         }
 
         contratos = await resContratos.json();
@@ -43,11 +42,11 @@ async function carregarDados() {
 
     } catch (erro) {
         console.error("Erro ao carregar dados:", erro);
-        alert("Erro ao conectar com o backend. Verifique se o Spring Boot estÃ¡ rodando.");
+        alert("Erro ao conectar com o backend. Verifique se o Spring Boot está rodando.");
     }
 }
 
-// Preencher seleÃ§Ã£o de clientes
+// Preencher seleção de clientes
 function preencherClientes() {
     campoCliente.innerHTML = '<option value="">Selecione o cliente</option>';
 
@@ -59,9 +58,9 @@ function preencherClientes() {
     });
 }
 
-// Preencher seleÃ§Ã£o de imÃ³veis
+// Preencher seleção de imóveis
 function preencherImoveis() {
-    campoImovel.innerHTML = '<option value="">Selecione o imÃ³vel</option>';
+    campoImovel.innerHTML = '<option value="">Selecione o imóvel</option>';
 
     imoveis.forEach(imovel => {
         const opcao = document.createElement("option");
@@ -110,7 +109,7 @@ formularioContrato.addEventListener("submit", async function (event) {
     const codigo = document.getElementById("codigo-contrato").value.trim();
 
     if (contratos.some(c => c.codigo.toLowerCase() === codigo.toLowerCase())) {
-        alert("JÃ¡ existe um contrato com esse cÃ³digo.");
+        alert("Já existe um contrato com esse código.");
         return;
     }
 
@@ -118,7 +117,7 @@ formularioContrato.addEventListener("submit", async function (event) {
     const dataTermino = document.getElementById("data-termino").value;
 
     if (dataTermino <= dataInicio) {
-        alert("A data de tÃ©rmino deve ser posterior Ã  data de inÃ­cio.");
+        alert("A data de término deve ser posterior à data de início.");
         return;
     }
 
@@ -160,13 +159,13 @@ formularioContrato.addEventListener("submit", async function (event) {
 
     } catch (erro) {
         console.error("Erro ao cadastrar contrato:", erro);
-        alert("NÃ£o foi possÃ­vel cadastrar o contrato. Verifique os dados e o backend.");
+        alert("Não foi possível cadastrar o contrato. Verifique os dados e o backend.");
     }
 });
 
-// FormataÃ§Ã£o
+// Formatação
 function formatarData(data) {
-    if (!data) return "â€”";
+    if (!data) return "—";
 
     const partes = data.split("-");
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
@@ -179,7 +178,7 @@ function formatarAluguel(valor) {
     });
 }
 
-// SituaÃ§Ã£o calculada pelas datas, pois o backend nÃ£o possui campo situacao
+// Situação calculada pelas datas, pois o backend não possui campo situacao
 function obterSituacao(contrato) {
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
@@ -274,12 +273,12 @@ function mostrarContratos() {
         botao.addEventListener("click", () => {
             alert(
                 `Contrato: ${contrato.codigo}\n` +
-                `ImÃ³vel: ${imovel.codigo || imovel.id}\n` +
+                `Imóvel: ${imovel.codigo || imovel.id}\n` +
                 `Cliente: ${cliente.nome || cliente.id}\n` +
-                `InÃ­cio: ${formatarData(contrato.dataInicio)}\n` +
-                `TÃ©rmino: ${formatarData(contrato.dataTermino)}\n` +
+                `Início: ${formatarData(contrato.dataInicio)}\n` +
+                `Término: ${formatarData(contrato.dataTermino)}\n` +
                 `Valor: ${formatarAluguel(contrato.valorContrato)}\n` +
-                `SituaÃ§Ã£o: ${situacao}`
+                `Situação: ${situacao}`
             );
         });
 
@@ -294,5 +293,5 @@ function mostrarContratos() {
 buscaContrato.addEventListener("input", mostrarContratos);
 filtroSituacao.addEventListener("change", mostrarContratos);
 
-// InicializaÃ§Ã£o
+// Inicialização
 carregarDados();
