@@ -107,21 +107,51 @@
 
                     <div class="card-dashboard">
                         <span>Total de receitas</span>
-                        <strong>R$ 50.456,65</strong>
+                        <strong id="total-receitas">R$ 0,00</strong>
                     </div>
 
                     <div class="card-dashboard">
                         <span>Total de despesas</span>
-                        <strong>R$ 23.632,86</strong>
+                        <strong id="total-despesas">R$ 0,00</strong>
                     </div>
 
                     <div class="card-dashboard">
                         <span>Saldo</span>
-                        <strong>R$ 26.823,79</strong>
+                        <strong id="saldo-financeiro">R$ 0,00</strong>
                     </div>
 
                 </div>
-          
+                
+
+                <!-- LISTAGEM DE MOVIMENTAÇÕES -->
+                <div class="mt-4">
+                    <h3>Movimentações financeiras</h3>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Tipo</th>
+                                    <th>Categoria</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="lista-movimentacoes">
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        Carregando movimentações...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
 
 
             </section>
@@ -148,21 +178,21 @@
 
                 <div class="campo">
                     <label>Descrição</label>
-                    <input type="text" id="descricao">
+                    <input type="text" id="descricao" required>
                 </div>
 
                 <div class="campo">
                     <label>Tipo</label>
                     <select id="tipo-movimentacao">
-                        <option value="Entrada">Entrada</option>
-                        <option value="Saída">Saída</option>
+                        <option value="ENTRADA">Entrada</option>
+                        <option value="SAIDA">Saída</option>
                     </select>
                 </div>
 
                 <div class="campo">
                     <label>Categoria</label>
                     <select id="categoria-movimentacao">
-                        <option value="Aluguel">Aluguel</option>
+                        <option value="ALUGUEL">Aluguel</option>
                         <option value="IPTU">IPTU</option>
                     </select>
                 </div>
@@ -181,7 +211,7 @@
 
                 <div class="campo">
                     <label>Valor(R$)</label>
-                    <input type="number" id="valor" required>
+                    <input type="number" id="valor" min="0.01" step="0.01" required>
                 </div>
 
             </div>
