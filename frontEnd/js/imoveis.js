@@ -166,6 +166,10 @@ function mostrarImoveis() {
             // Aplica os filtros e atualiza a tabela.
             aplicarFiltros();
 
+
+            
+
+
         })
 
         .catch(error => {

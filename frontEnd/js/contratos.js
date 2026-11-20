@@ -222,8 +222,7 @@ function mostrarContratos() {
         `;
         return;
     }
-
-    filtrados.forEach(contrato => {
+filtrados.forEach(contrato => {
         const linha = document.createElement("tr");
 
         const situacao = obterSituacao(contrato);
@@ -236,6 +235,7 @@ function mostrarContratos() {
             classeStatus = "status-contrato-encerrado";
         }
 
+        const codigoSeguro = (contrato.codigo || "").replace(/'/g, "\\'");
         const imovel = contrato.imovel || {};
         const cliente = contrato.cliente || {};
 
@@ -248,9 +248,17 @@ function mostrarContratos() {
             formatarAluguel(contrato.valorContrato)
         ];
 
-        dados.forEach(valor => {
+        dados.forEach((valor, index) => {
             const celula = document.createElement("td");
-            celula.textContent = valor;
+
+            if (index === 0) {
+                const spanCodigo = document.createElement("span");
+                spanCodigo.className = "codigo-contrato";
+                spanCodigo.textContent = valor;
+                celula.appendChild(spanCodigo);
+            } else {
+                celula.textContent = valor;
+            }
             linha.appendChild(celula);
         });
 
@@ -269,7 +277,15 @@ function mostrarContratos() {
         botao.type = "button";
         botao.className = "btn-ver-contrato";
         botao.title = "Ver contrato";
-        botao.textContent = "◉";
+        botao.dataset.codigo = codigoSeguro; 
+        
+        const icone = document.createElement("img");
+        icone.src = "formsIcons/olho.png";
+        icone.alt = "Visualizar";
+        icone.className = "icone-acao";
+        icone.style.width = "36px";
+        icone.style.height = "18px";
+        botao.appendChild(icone);
 
         botao.addEventListener("click", () => {
             alert(
@@ -285,9 +301,10 @@ function mostrarContratos() {
 
         celulaAcao.appendChild(botao);
         linha.appendChild(celulaAcao);
-
+        
         listaContratos.appendChild(linha);
     });
+
 }
 
 // Filtros

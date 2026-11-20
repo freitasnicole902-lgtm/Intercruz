@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>INTERCRUZ</h2>
+                <span>FUNDAÇÃO MANUEL CRUZ</span>
+            </div>
+
+            <nav>
+
+                <a href="index.html" class="menu-item">
+                     <img src="icons/tabDashboard.png" alt="" class="menu-icon">
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="imoveis.html" class="menu-item">
+                    <img src="icons/tabImoveis.png" alt="" class="menu-icon">
+                    <span>Imóveis</span>
+                </a>
+
+                <a href="contratos.html" class="menu-item">
+                    <img src="icons/tabContratos.png" alt="" class="menu-icon">
+                    <span>Contratos</span>
+                </a>
+
+                <a href="clientes.html" class="menu-item">
+                    <img src="icons/tabClientes.png" alt="" class="menu-icon">
+                    <span>Clientes</span>
+                </a>
+
+                <a href="financeiro.html" class="menu-item">
+                    <img src="icons/tabFinanceiro.png" alt="" class="menu-icon">
+                    <span>Financeiro</span>
+                </a>
+
+                <a href="documentos.html" class="menu-item active">
+                    <img src="icons/documentosActivated.png" alt="" class="menu-icon">
+                    <span>Documentos</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <img src="icons/tabPrestacao.png" alt="" class="menu-icon">
+                    <span>Prestação de contas</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <img src="icons/tabRelatorios.png" alt="" class="menu-icon">
+                    <span>Relatórios</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <img src="icons/configuracoes.png" alt="" class="menu-icon">
+                    <span>Configurações</span>
+                </a>
+
+            </nav>  
+            
+            <div class="menu-sair">
+                <img src="icons/iconSair.png" alt="" class="menu-icon">
+                    <span>Sair</span>
+            </div>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <h1>Documentos</h1>
+            </header>
+ 
+            <section class="content">
+
+               <div class="page-header">
+
+                <div>
+
+                    <h2>Central de Documentos</h2>
+
+                </div>
+
+
+                <!-- BOTÃO QUE ABRE O MODAL -->
+
+                <button
+                    type="button"
+                    id="btn-novo-imovel"
+                    class="btn-novo-imovel">
+
+                    + Novo documento
+
+                </button>
+
+            </div>
+
+            <div class="contratos-filtros">
+                <input type="search"
+                       id="busca-contrato"
+                       placeholder="⌕ Buscar por título/imóvel/contrato...">
+            </div>
+
+            <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Título</th>
+
+                            <th>Categoria</th>
+
+                            <th>Contrato</th>
+
+                            <th>Cliente</th>
+
+                            <th>Data</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="lista-documentos">
+
+                        <tr>
+
+                            <td colspan="6">Nenhum documento cadastrado.</td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+                
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
