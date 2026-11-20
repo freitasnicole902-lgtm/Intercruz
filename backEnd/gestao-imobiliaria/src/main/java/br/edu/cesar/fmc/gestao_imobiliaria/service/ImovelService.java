@@ -4,6 +4,8 @@ import br.edu.cesar.fmc.gestao_imobiliaria.model.Imovel;
 import br.edu.cesar.fmc.gestao_imobiliaria.model.dto.DashboardDTO;
 import br.edu.cesar.fmc.gestao_imobiliaria.model.enums.SituacaoImovel;
 import br.edu.cesar.fmc.gestao_imobiliaria.repository.ImovelRepository;
+
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

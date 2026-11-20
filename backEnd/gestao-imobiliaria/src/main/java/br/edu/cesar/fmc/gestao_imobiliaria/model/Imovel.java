@@ -12,15 +12,16 @@ public class Imovel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;      // Usado no cadastroImovel.html ou derivado do Código no Modal[cite: 25, 26]
+    private String titulo;      // Usado no cadastroImovel.html ou derivado do Código no Modal
+    @Column(nullable = false, unique = true) 
     private String codigo;      // Código de identificação (ex: IMV-001)
     private String endereco;
-    private String bairro;      // Presente no Modal[cite: 26]
+    private String bairro;      // Presente no Modal
     private String cidade;
     private Double valor;
-    private Double area;        // Presente no Modal[cite: 26]
+    private Double area;        // Presente no Modal
     private Integer quartos;
-    private String observacoes; // Presente no Modal[cite: 26]
+    private String observacoes; // Presente no Modal
 
     @Enumerated(EnumType.STRING)
     private TipoImovel tipo;
