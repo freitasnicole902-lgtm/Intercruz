@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- <title>InterCruz - Dashboard</title> -->
+    <title>InterCruz - Dashboard</title>
 
     <!-- Bootstrap -->
     <link
@@ -149,12 +149,48 @@
 
                 </div>
 
+                                <!-- GRÁFICOS DO DASHBOARD -->
+
+<div class="graficos-dashboard">
+
+    <!-- GRÁFICO DE RECEITAS X DESPESAS -->
+    <div class="grafico-container">
+        <h3>Receitas e despesas mensais</h3>
+
+        <div class="grafico-area">
+            <canvas id="graficoFinanceiro"></canvas>
+        </div>
+    </div>
+
+    <!-- GRÁFICO DE DISTRIBUIÇÃO DOS IMÓVEIS -->
+    <div class="grafico-container">
+        <h3>Distribuição dos imóveis</h3>
+
+        <div class="grafico-area grafico-rosca">
+            <canvas id="graficoImoveis"></canvas>
+        </div>
+    </div>
+
+    <!-- GRÁFICO DE EVOLUÇÃO DAS RECEITAS -->
+    <div class="grafico-container grafico-largo">
+        <h3>Evolução das receitas</h3>
+
+        <div class="grafico-area">
+            <canvas id="graficoReceitas"></canvas>
+        </div>
+    </div>
+
+</div>
+
+
             </section>
 
         </main>
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/financeiro.js"></script>
 </body>
 
 </html>
