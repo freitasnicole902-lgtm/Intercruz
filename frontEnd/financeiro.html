@@ -108,19 +108,19 @@
                     <div class="card-dashboard card-verde">
                         <span>Total de receitas</span>
                         <img src="dashBoardIcons/receita.png" alt="" class="menu-icon">
-                        <strong>R$ 50.456,65</strong>
+                        <strong id="total-receitas">R$ 0,00</strong>
                     </div>
 
                     <div class="card-dashboard card-vermelho">
                         <span>Total de despesas</span>
                         <img src="dashBoardIcons/despesas.png" alt="" class="menu-icon">
-                        <strong>R$ 23.632,86</strong>
+                        <strong id="total-despesas">R$ 0,00</strong>
                     </div>
 
                     <div class="card-dashboard card-azul">
                         <span>Saldo</span>
                         <img src="icons/financeiroActivated.png" alt="" class="menu-icon">
-                        <strong>R$ 26.823,79</strong>
+                        <strong id="saldo-financeiro">R$ 0,00</strong>
                     </div>
 
                 </div>
@@ -204,6 +204,11 @@
 
                             <th>Valor</th>
 
+                            <th>Status</th>
+
+                            <th>Ações</th>
+
+
                         </tr>
 
                     </thead>
@@ -213,7 +218,7 @@
 
                         <tr>
 
-                            <td colspan="6">Nenhuma movimentação cadastrada.</td>
+                            <td colspan="8" class="text-center">Carregando movimentações</td>
 
                         </tr>
                     </tbody>
@@ -253,15 +258,15 @@
                 <div class="campo">
                     <label>Tipo</label>
                     <select id="tipo-movimentacao">
-                        <option value="Entrada">Entrada</option>
-                        <option value="Saída">Saída</option>
+                        <option value="ENTRADA">Entrada</option>
+                        <option value="SAIDA">Saída</option>
                     </select>
                 </div>
 
                 <div class="campo">
                     <label>Categoria</label>
                     <select id="categoria-movimentacao">
-                        <option value="Aluguel">Aluguel</option>
+                        <option value="ALUGUEL">Aluguel</option>
                         <option value="IPTU">IPTU</option>
                     </select>
                 </div>
@@ -304,7 +309,6 @@
 </div>
 <!-- Biblioteca do gráfico -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script src="js/financeiro.js"></script>
 
 </body>

@@ -54,7 +54,7 @@
                     <span>Financeiro</span>
                 </a>
 
-                <a href="#" class="menu-item">
+                <a href="documentos.html" class="menu-item">
                     <img src="icons/tabDocumentos.png" alt="" class="menu-icon">
                     <span>Documentos</span>
                 </a>
@@ -120,6 +120,14 @@
                         <strong id="saldo-financeiro">R$ 0,00</strong>
                     </div>
 
+                </div>
+
+                <!-- GRÁFICO FINANCEIRO -->
+                <div class="mt-4">
+                    <h3>Receitas x Despesas mensais</h3>
+                    <div style="position: relative; height: 350px;">
+                        <canvas id="graficoFinanceiro"></canvas>
+                    </div>
                 </div>
                 
 
@@ -233,6 +241,10 @@
 
     </div>
 </div>
+<!-- Biblioteca Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+<!-- JavaScript do financeiro -->
 <script src="js/financeiro.js"></script>
 </body>
 
