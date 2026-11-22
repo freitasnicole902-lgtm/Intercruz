@@ -125,7 +125,6 @@ body {
     width: calc(100% - 270px);
 }
 
-
 /* TOPO */
 
 .topbar {
@@ -179,35 +178,114 @@ body {
     gap: 20px;
 
     padding-top: 30px;
+
+    padding-bottom: 30px;
 }
 
 .card-dashboard {
     background-color: white;
-
     border: 1px solid #e1e6ef;
     border-radius: 14px;
-
     padding: 25px;
-
     min-height: 120px;
-
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: 16px;
 }
 
 .card-dashboard span {
-    display: block;
+    grid-column: 1;
+    grid-row: 1;
 
     font-size: 13px;
+    font-weight: 600;
     text-transform: uppercase;
-
     color: #62728e;
-
-    margin-bottom: 12px;
 }
+
+.card-dashboard img {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    box-sizing: border-box;
+    object-fit: contain;
+
+    background-color: var(--cor-icone, #eaf1fd);
+    border-radius: 4px;
+}
+
+.card-azul     { --cor-icone: #eaf1fd; }
+.card-verde    { --cor-icone: #e6f7ee; }
+.card-laranja  { --cor-icone: #fff3e0; }
+.card-vermelho { --cor-icone: #fdeaea; }
+.card-cinza    { --cor-icone: #FAFAFA; }
+.card-vermelho    { --cor-icone: #FFE3E3; }
 
 .card-dashboard strong {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
     font-size: 30px;
+    color: #1b3a7a;
 }
+
+/* ORGANIZAÇÃO DOS GRÁFICOS */
+
+.graficos-dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+/* CARDS DOS GRÁFICOS */
+
+.grafico-container {
+    background-color: white;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+    min-width: 0;
+}
+
+.grafico-container h3 {
+    color: #123e7a;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* ÁREA DOS GRÁFICOS */
+
+.grafico-area {
+    position: relative;
+    height: 210px;
+    width: 100%;
+}
+
+.grafico-rosca {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+/* GRÁFICO INFERIOR */
+
+.grafico-largo {
+    grid-column: 1 / -1;
+}
+
+.grafico-largo .grafico-area {
+    height: 220px;
+}
+
 
 /* CABEÇALHO DA PÁGINA */
 
@@ -296,6 +374,174 @@ body {
 
 .codigo {
     color: #1748b5;
+}
+
+.icone-acao {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.acao {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+
+/* FINANCERIO */
+
+/* CARDS */
+.financeiro-page .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    padding-top: 25px;
+    padding-bottom: 35px;
+}
+
+.financeiro-page .card-dashboard {
+    background: #fff;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 90px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.10);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 7px;
+}
+
+.financeiro-page .card-dashboard span {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #999;
+}
+
+.financeiro-page .card-dashboard img {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+    object-fit: contain;
+    border-radius: 4px;
+    background-color: var(--cor-icone, #eaf1fd);
+}
+
+.financeiro-page .card-dashboard strong {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 24px;
+    font-weight: 600;
+    color: #173f83;
+    white-space: nowrap;
+}
+
+/* CORES DOS ÍCONES */
+.financeiro-page .card-verde {
+    --cor-icone: #e6f7ee;
+}
+
+.financeiro-page .card-vermelho {
+    --cor-icone: #ffe3e3;
+}
+
+.financeiro-page .card-azul {
+    --cor-icone: #eaf1fd;
+}
+
+/* GRÁFICO */
+.financeiro-page .grafico-container {
+    background: #fff;
+    border: 1px solid #e1e6ef;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.10);
+}
+
+.financeiro-page .grafico-container h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #173f83;
+    margin-bottom: 28px;
+}
+
+.financeiro-page .grafico-area {
+    position: relative;
+    width: 100%;
+    height: 290px;
+}
+
+
+.contrato-form-grid .campo input,
+.contrato-form-grid .campo select {
+    width: 100%;
+    height: 48px;
+    min-height: 48px;
+    box-sizing: border-box;
+
+    padding: 0 12px;
+
+    border: 1px solid #dce3ef;
+    border-radius: 8px;
+
+    background-color: #fff;
+    color: #17233c;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+
+    outline: none;
+}
+/* SETA DOS SELECTS DOS MODAIS */
+.campo select,
+.contrato-form-grid .campo select {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background-color: #fff !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 14px center !important;
+    background-size: 12px !important;
+    padding-right: 38px !important;
+    cursor: pointer;
+}
+
+
+/* RESPONSIVIDADE */
+@media (max-width: 900px) {
+    .financeiro-page .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .financeiro-page .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .financeiro-page .card-dashboard strong {
+        font-size: 21px;
+    }
+
+    .financeiro-page .grafico-container {
+        padding: 18px;
+    }
+
+    .financeiro-page .grafico-area {
+        height: 240px;
+    }
 }
 
 
@@ -551,10 +797,11 @@ body {
 .campo input,
 .campo select {
     width: 100%;
+    height: 42px;
 
     box-sizing: border-box;
 
-    padding: 11px 12px;
+    padding: 0 12px;
 
     border: 1px solid #d1d5db;
 
@@ -563,6 +810,22 @@ body {
     font-size: 14px;
 
     outline: none;
+}
+.campo select {
+    -webkit-appearance: none;
+    appearance: none;
+
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+
+    padding-right: 38px;
+
+    color: #17233c;
+
+    cursor: pointer;
 }
 
 .campo input:focus,
@@ -679,6 +942,7 @@ body {
 .campo textarea:focus {
     border-color: #0b1f3a;
 }
+
 
 
 /* ========================================
@@ -893,8 +1157,10 @@ body {
 
 .contratos-filtros {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 24px;
+    row-gap: 14px;
     padding: 10px 28px;
     margin-bottom: 25px;
     background: #fff;
@@ -914,6 +1180,35 @@ body {
     border-radius: 6px;
     color: #17233c;
     font-size: 12px;
+}
+
+.filtros-categorias {
+    flex: 0 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filtro-chip {
+    padding: 3px 12px;
+    font-size: 10px;
+    color: #6b7280;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.filtro-chip:hover {
+    background: #e5e7eb;
+}
+
+.filtro-chip.active {
+    color: #fff;
+    background: #1e3a7a;
+    border-color: #1e3a7a;
+    font-weight: 600;
 }
 
 .contratos-tabela {
@@ -1037,15 +1332,16 @@ body {
     font-size: 13px;
 }
 
-.contrato-form-grid .campo input,
+/* .contrato-form-grid .campo input,
 .contrato-form-grid .campo select {
+    
     width: 100%;
     min-height: 40px;
     padding: 8px 10px;
     border: 1px solid #d0d5dd;
     border-radius: 5px;
     font-size: 13px;
-}
+} */
 
 .modal-contrato-acoes {
     display: flex;
@@ -1157,7 +1453,7 @@ body {
     font-size: 12px;
 }
 
-.contrato-form-grid .campo input,
+/* .contrato-form-grid .campo input,
 .contrato-form-grid .campo select {
     width: 100%;
     min-height: 40px;
@@ -1168,7 +1464,7 @@ body {
     color: #17233c;
     font-size: 13px;
     outline: none;
-}
+} */
 
 .contrato-form-grid .campo input:focus,
 .contrato-form-grid .campo select:focus {

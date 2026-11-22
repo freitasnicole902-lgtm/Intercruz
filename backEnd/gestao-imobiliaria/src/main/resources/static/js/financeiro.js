@@ -1,4 +1,3 @@
-
 const API_URL = "/api/movimentacoes";
 
 let graficoFinanceiro = null;
@@ -21,7 +20,10 @@ const elementoGrafico = document.getElementById("graficoFinanceiro");
 const filtroPeriodo = document.getElementById("filtroPeriodo");
 const filtroTipo = document.getElementById("filtroTipo");
 
-// Formatação
+// =====================================
+// FORMATAÇÃO
+// =====================================
+
 function formatarMoeda(valor) {
     return Number(valor || 0).toLocaleString("pt-BR", {
         style: "currency",
@@ -67,7 +69,10 @@ function formatarData(data) {
     return dataLocal.toLocaleDateString("pt-BR");
 }
 
-// Modal
+// =====================================
+// MODAL FINANCEIRO
+// =====================================
+
 function abrirModal() {
     if (modalFinanceiro) {
         modalFinanceiro.style.display = "flex";
@@ -84,7 +89,10 @@ function fecharModal() {
     }
 }
 
-// Cards financeiros
+// =====================================
+// CARDS FINANCEIROS
+// =====================================
+
 function atualizarCards(movimentacoes) {
     const pagas = movimentacoes.filter(
         movimentacao => movimentacao.status === "PAGO"
@@ -117,7 +125,10 @@ function atualizarCards(movimentacoes) {
     }
 }
 
-// Gráfico mensal
+// =====================================
+// GRÁFICO DA PÁGINA FINANCEIRO
+// =====================================
+
 function atualizarGrafico(movimentacoes) {
     if (!elementoGrafico) return;
 
@@ -232,7 +243,10 @@ function atualizarGrafico(movimentacoes) {
     });
 }
 
-// Filtros
+// =====================================
+// FILTROS
+// =====================================
+
 function atualizarOpcoesPeriodo(movimentacoes) {
     if (!filtroPeriodo) return;
 
@@ -280,7 +294,10 @@ function obterMovimentacoesFiltradas() {
     return resultado;
 }
 
-// Tabela
+// =====================================
+// TABELA DE MOVIMENTAÇÕES
+// =====================================
+
 function renderizarMovimentacoes() {
     if (!listaMovimentacoes) return;
 
@@ -352,7 +369,10 @@ function renderizarMovimentacoes() {
     });
 }
 
-// Carregar movimentações
+// =====================================
+// CARREGAR MOVIMENTAÇÕES
+// =====================================
+
 async function carregarMovimentacoes() {
     if (!listaMovimentacoes) return;
 
@@ -393,7 +413,10 @@ async function carregarMovimentacoes() {
     }
 }
 
-// Registrar pagamento
+// =====================================
+// REGISTRAR PAGAMENTO
+// =====================================
+
 async function registrarPagamento(id) {
     const confirmar = confirm(
         "Deseja realmente registrar o pagamento desta movimentação?"
@@ -427,7 +450,10 @@ async function registrarPagamento(id) {
     }
 }
 
-// Cadastrar movimentação
+// =====================================
+// CADASTRAR MOVIMENTAÇÃO
+// =====================================
+
 async function cadastrarMovimentacao(event) {
     event.preventDefault();
 
@@ -443,8 +469,8 @@ async function cadastrarMovimentacao(event) {
         categoria: document.getElementById("categoria-movimentacao").value,
         data: document.getElementById("data").value,
         valor: Number(document.getElementById("valor").value),
-        
-    };imovel: null
+        imovel: null
+    };
 
     if (!movimentacao.descricao || !movimentacao.data ||
         !Number.isFinite(movimentacao.valor) || movimentacao.valor <= 0) {
@@ -477,7 +503,10 @@ async function cadastrarMovimentacao(event) {
     }
 }
 
-// Eventos
+// =====================================
+// EVENTOS DO MODAL E DOS FILTROS
+// =====================================
+
 if (btnNovaMovimentacao) {
     btnNovaMovimentacao.addEventListener("click", abrirModal);
 }
@@ -510,5 +539,198 @@ if (filtroTipo) {
     filtroTipo.addEventListener("change", renderizarMovimentacoes);
 }
 
-// Inicialização
-carregarMovimentacoes();
+// =====================================
+// GRÁFICOS DO DASHBOARD
+// Dados demonstrativos do protótipo
+// =====================================
+
+function inicializarGraficosDashboard() {
+    if (typeof Chart === "undefined") {
+        console.warn("Chart.js não foi carregado.");
+        return;
+    }
+
+    // 1. GRÁFICO FINANCEIRO
+
+    const elementoGraficoDashboard =
+        document.getElementById("graficoFinanceiro");
+
+    if (elementoGraficoDashboard) {
+        new Chart(elementoGraficoDashboard.getContext("2d"), {
+            type: "bar",
+
+            data: {
+                labels: [
+                    "Jan", "Fev", "Mar", "Abr",
+                    "Mai", "Jun", "Jul", "Ago",
+                    "Set", "Out", "Nov", "Dez"
+                ],
+
+                datasets: [
+                    {
+                        label: "Alugados",
+                        data: Array(12).fill(30000),
+                        backgroundColor: "#153F7F",
+                        borderRadius: 4,
+                        barPercentage: 0.75,
+                        categoryPercentage: 0.65
+                    },
+                    {
+                        label: "Disponíveis",
+                        data: Array(12).fill(12000),
+                        backgroundColor: "#82B5CE",
+                        borderRadius: 4,
+                        barPercentage: 0.75,
+                        categoryPercentage: 0.65
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                interaction: {
+                    intersect: false,
+                    mode: "index"
+                },
+
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "bottom"
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: context =>
+                                context.dataset.label + ": " +
+                                Number(context.parsed.y || 0).toLocaleString(
+                                    "pt-BR",
+                                    {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    }
+                                )
+                        }
+                    }
+                },
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: valor => (valor / 1000) + "K"
+                        },
+                        grid: {
+                            color: "#eeeeee"
+                        }
+                    },
+
+                    x: {
+                        grid: {
+                            color: "#eeeeee"
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. GRÁFICO DE DISTRIBUIÇÃO DOS IMÓVEIS
+
+    const elementoImoveis = document.getElementById("graficoImoveis");
+
+    if (elementoImoveis) {
+        new Chart(elementoImoveis, {
+            type: "doughnut",
+
+            data: {
+                labels: [
+                    "Alugados",
+                    "Disponíveis",
+                    "Em manutenção"
+                ],
+
+                datasets: [{
+                    data: [91, 27, 6],
+
+                    backgroundColor: [
+                        "#123e7a",
+                        "#83b5d0",
+                        "#dddddd"
+                    ],
+
+                    borderWidth: 0
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    }
+
+    // 3. GRÁFICO DE EVOLUÇÃO DAS RECEITAS
+
+    const elementoReceitas = document.getElementById("graficoReceitas");
+
+    if (elementoReceitas) {
+        new Chart(elementoReceitas, {
+            type: "line",
+
+            data: {
+                labels: [
+                    "Jan", "Fev", "Mar", "Abr",
+                    "Mai", "Jun", "Jul", "Ago"
+                ],
+
+                datasets: [{
+                    label: "Receitas",
+
+                    data: [
+                        20000, 23000, 27000, 31000,
+                        35000, 39000, 43000, 47000
+                    ],
+
+                    borderColor: "#123e7a",
+                    backgroundColor: "#123e7a",
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    tension: 0
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+}
+
+// =====================================
+// INICIALIZAÇÃO CONTEXTUAL
+// =====================================
+
+// Página Financeiro: carrega dados reais da API.
+// Dashboard: inicializa os três gráficos demonstrativos.
+
+if (listaMovimentacoes) {
+    carregarMovimentacoes();
+} else {
+    inicializarGraficosDashboard();
+}
