@@ -16,6 +16,10 @@ const formulario =
 
 let todosImoveis= [];
 
+let imovelEmEdicaoId = null;
+
+const tituloModal = document.getElementById("titulo-modal-imovel");
+
 const campoBusca = document.getElementById("campoBusca");
 const filtroTipo = document.getElementById("filtroTipo");
 const filtroSituacao = document.getElementById("filtroSituacao");
@@ -27,6 +31,12 @@ const filtroBairro = document.getElementById("filtroBairro");
 // ==================================================
 
 btnNovoImovel.addEventListener("click", function () {
+
+    imovelEmEdicaoId = null;
+
+    formulario.reset();
+
+    tituloModal.textContent = "Cadastrar imóvel";
 
     modal.style.display = "flex";
 
@@ -43,6 +53,10 @@ function fecharModal() {
 
     formulario.reset();
 
+    imovelEmEdicaoId = null;
+
+    tituloModal.textContent = "Cadastrar imóvel";
+
 }
 
 
@@ -55,6 +69,31 @@ btnCancelar.addEventListener(
     "click",
     fecharModal
 );
+
+// ==================================================
+// EDITAR IMÓVEL
+// ==================================================
+
+function editarImovel(imovel) {
+
+    imovelEmEdicaoId = imovel.id;
+
+    document.getElementById("codigo").value = imovel.codigo ?? "";
+    document.getElementById("tipo").value = imovel.tipo ?? "";
+    document.getElementById("endereco").value = imovel.endereco ?? "";
+    document.getElementById("bairro").value = imovel.bairro ?? "";
+    document.getElementById("cidade").value = imovel.cidade ?? "";
+    document.getElementById("situacao").value = imovel.situacao ?? "";
+    document.getElementById("valor").value = imovel.valor ?? "";
+    document.getElementById("area").value = imovel.area ?? "";
+    document.getElementById("quartos").value = imovel.quartos ?? "";
+    document.getElementById("observacoes").value = imovel.observacoes ?? "";
+
+    tituloModal.textContent = "Editar imóvel";
+
+    modal.style.display = "flex";
+
+}
 
 
 // ==================================================
@@ -108,6 +147,48 @@ async function cadastrarImovel(imovel) {
     }
 }
 
+// ==================================================
+// ATUALIZAR IMÓVEL
+// ==================================================
+
+async function atualizarImovel(id, imovel) {
+
+    try {
+
+        const response = await fetch(`/api/imoveis/${id}`, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(imovel)
+
+        });
+
+        if (!response.ok) {
+            throw new Error("Não foi possível atualizar o imóvel.");
+        }
+
+        await response.json();
+
+        alert("Imóvel atualizado com sucesso!");
+
+        fecharModal();
+
+        mostrarImoveis();
+
+    } catch (error) {
+
+        console.error("Erro ao atualizar imóvel:", error);
+
+        alert(error.message);
+
+    }
+
+}
+
 
 // ==================================================
 // EVENTO DE ENVIO DO FORMULÃRIO
@@ -130,7 +211,15 @@ formulario.addEventListener("submit", async function(event) {
         observacoes: document.getElementById("observacoes").value.trim()
     };
 
-    await cadastrarImovel(imovel);
+    if (imovelEmEdicaoId !== null) {
+
+        await atualizarImovel(imovelEmEdicaoId, imovel);
+    
+    } else {
+    
+        await cadastrarImovel(imovel);
+    
+    }
 
 });
 
@@ -273,7 +362,9 @@ function renderizarImoveis(imoveis) {
             </td>
 
             <td>
-                <strong>${imovel.titulo || 'Imóvel'}</strong><br>
+            ${imovel.titulo && imovel.titulo.trim() !== "" && imovel.titulo !== "Imóvel sem título"
+                ? `<strong>${imovel.titulo}</strong><br>`
+                : ""}
                 ${imovel.endereco || 'Endereçoo não informado'}
                 <br>
                 <small>
@@ -306,7 +397,12 @@ function renderizarImoveis(imoveis) {
             </td>
 
             <td>
-                <button class="acao" title="Editar">✏️</button>
+                <button
+                    class="acao btn-editar-imovel-lista"
+                    type="button"
+                    title="Editar">
+                    ✏️
+                </button>
 
                 <button
                     class="acao"
@@ -316,6 +412,16 @@ function renderizarImoveis(imoveis) {
                 </button>
             </td>
         `;
+        
+        const btnEditar = linha.querySelector(".btn-editar-imovel-lista");
+
+        btnEditar.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            editarImovel(imovel);
+
+        });
 
         listaImoveis.appendChild(linha);
 
