@@ -52,12 +52,28 @@ public class ImovelController {
 
     // Atualizar
     @PutMapping("/{id}")
-    public ResponseEntity<Imovel> atualizar(@PathVariable Long id, @RequestBody Imovel imovelAtualizado) {
+    public ResponseEntity<Imovel> atualizar(
+            @PathVariable Long id,
+            @RequestBody Imovel imovelAtualizado) {
+
         return imovelService.buscarPorId(id)
                 .map(imovelExistente -> {
-                    imovelAtualizado.setId(id);
-                    Imovel imovelSalvo = imovelService.salvar(imovelAtualizado);
+
+                    imovelExistente.setCodigo(imovelAtualizado.getCodigo());
+                    imovelExistente.setTipo(imovelAtualizado.getTipo());
+                    imovelExistente.setEndereco(imovelAtualizado.getEndereco());
+                    imovelExistente.setBairro(imovelAtualizado.getBairro());
+                    imovelExistente.setCidade(imovelAtualizado.getCidade());
+                    imovelExistente.setSituacao(imovelAtualizado.getSituacao());
+                    imovelExistente.setValor(imovelAtualizado.getValor());
+                    imovelExistente.setArea(imovelAtualizado.getArea());
+                    imovelExistente.setQuartos(imovelAtualizado.getQuartos());
+                    imovelExistente.setObservacoes(imovelAtualizado.getObservacoes());
+
+                    Imovel imovelSalvo = imovelService.salvar(imovelExistente);
+
                     return ResponseEntity.ok(imovelSalvo);
+
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
