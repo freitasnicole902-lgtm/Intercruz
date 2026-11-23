@@ -105,7 +105,7 @@
 
                 <button
                     type="button"
-                    id="btn-novo-imovel"
+                    id="btn-novo-documento"
                     class="btn-novo-imovel">
 
                     + Novo documento
@@ -175,6 +175,132 @@
 
     </div>
 
+    <!-- MODAL NOVO DOCUMENTO -->
+
+<div id="modal-documento" class="modal-contrato-overlay">
+
+    <div class="modal-contrato">
+
+        <div class="modal-contrato-cabecalho">
+
+            <h2>Novo documento</h2>
+
+            <button
+                type="button"
+                class="modal-contrato-fechar"
+                id="btn-fechar-documento">
+                &times;
+            </button>
+
+        </div>
+
+        <form id="form-documento">
+
+            <div class="contrato-form-grid documento-form-grid">
+
+                <!-- TÍTULO -->
+                <div class="campo completo">
+                    <label for="titulo-documento">Título</label>
+                    <input
+                        type="text"
+                        id="titulo-documento"
+                        required>
+                </div>
+
+                <!-- CATEGORIA -->
+                <div class="campo">
+                    <label for="categoria-documento">Categoria</label>
+
+                    <select id="categoria-documento" required>
+                        <option value="comprovantes">Comprovantes</option>
+                        <option value="contratos">Contratos</option>
+                        <option value="financeiro">Financeiro</option>
+                        <option value="vistoria">Vistoria</option>
+                        <option value="prestacao-de-contas">Prestação de contas</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+
+                <!-- DATA -->
+                <div class="campo">
+                    <label for="data-documento">Data</label>
+                    <input
+                        type="date"
+                        id="data-documento"
+                        required>
+                </div>
+
+                <!-- IMÓVEL -->
+                <div class="campo">
+                    <label for="imovel-documento">Imóvel</label>
+
+                    <select id="imovel-documento">
+                        <option value="">Sem imóvel vinculado</option>
+                    </select>
+                </div>
+
+                <!-- VÍNCULO -->
+                <div class="campo vinculo">
+                    <label for="vinculo-documento">Vínculo</label>
+
+                    <select id="vinculo-documento">
+                        <option value="">Selecione</option>
+                        <option value="contrato">Contrato</option>
+                        <option value="cliente">Cliente</option>
+                    </select>
+                </div>
+
+                <!-- NOME -->
+                <div class="campo completo">
+                    <label for="nome-documento">Nome</label>
+                    <input
+                        type="text"
+                        id="nome-documento">
+                </div>
+
+                <!-- DESCRIÇÃO -->
+                <div class="campo completo">
+                    <label for="descricao-documento">Descrição</label>
+                    <textarea
+                        id="descricao-documento"
+                        rows="3">
+                    </textarea>
+                </div>
+
+                <!-- ARQUIVO -->
+                <div class="campo completo">
+                    <label for="arquivo-documento">Arquivo</label>
+                    <input
+                        type="file"
+                        id="arquivo-documento"
+                        accept=".pdf,.doc,.docx">
+                </div>
+
+            </div>
+
+            <div class="modal-contrato-acoes">
+
+                <button
+                    type="button"
+                    class="btn-cancelar-contrato"
+                    id="btn-cancelar-documento">
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-salvar">
+                    Cadastrar documento
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<script src="js/documento.js"></script>
 </body>
 
 </html>

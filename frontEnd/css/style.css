@@ -650,6 +650,50 @@ body {
     z-index: 1000;
 }
 
+/* ========================================
+   MODAL DE NOVO DOCUMENTO
+======================================== */
+#modal-documento .modal-contrato {
+    width: 100%;
+    max-width: 780px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 32px 40px;
+}
+
+#modal-documento .documento-form-grid {
+    column-gap: 22px;
+    row-gap: 18px;
+}
+
+.documento-form-grid .campo.completo {
+    grid-column: 1 / -1;
+}
+
+.documento-form-grid .campo.vinculo {
+    grid-column: 1;
+}
+
+.documento-form-grid .campo textarea {
+    min-height: 100px;
+}
+
+@media (max-width: 700px) {
+
+    #modal-documento .modal-contrato {
+        padding: 25px;
+    }
+
+    .documento-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .documento-form-grid .campo.completo,
+    .documento-form-grid .campo.vinculo {
+        grid-column: 1;
+    }
+}
+
 
 /*     CONTEÚDO DO MODAL  */
 
@@ -1269,29 +1313,6 @@ body {
     font-size: 17px;
 }
 
-/* MODAL */
-
-.modal-contrato-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgba(15, 23, 42, 0.45);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.modal-contrato {
-    width: 100%;
-    max-width: 650px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 25px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-}
 
 .modal-contrato-cabecalho {
     display: flex;
@@ -1332,16 +1353,6 @@ body {
     font-size: 13px;
 }
 
-/* .contrato-form-grid .campo input,
-.contrato-form-grid .campo select {
-    
-    width: 100%;
-    min-height: 40px;
-    padding: 8px 10px;
-    border: 1px solid #d0d5dd;
-    border-radius: 5px;
-    font-size: 13px;
-} */
 
 .modal-contrato-acoes {
     display: flex;
@@ -1406,6 +1417,22 @@ body {
     padding: 20px;
 }
 
+/* Modal aberto */
+.modal-contrato-overlay.aberto {
+    display: flex;
+}
+
+.modal-contrato {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
+}
+
 .modal-contrato {
     width: 100%;
     max-width: 650px;
@@ -1452,19 +1479,6 @@ body {
     color: #8290a8;
     font-size: 12px;
 }
-
-/* .contrato-form-grid .campo input,
-.contrato-form-grid .campo select {
-    width: 100%;
-    min-height: 40px;
-    padding: 8px 12px;
-    border: 1px solid #e1e6ef;
-    border-radius: 6px;
-    background: #fff;
-    color: #17233c;
-    font-size: 13px;
-    outline: none;
-} */
 
 .contrato-form-grid .campo input:focus,
 .contrato-form-grid .campo select:focus {
